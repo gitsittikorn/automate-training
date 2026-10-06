@@ -1,3 +1,4 @@
+// npx playwright test tests/example.spec.ts --headed
 import { test, expect } from '@playwright/test';
 // import เครื่องมือ test และ expect จาก Playwright
 // test ใช้สำหรับสร้าง Test Case
