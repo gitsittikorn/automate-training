@@ -1,4 +1,104 @@
-<!doctype html><html lang="th"><head>
-<link rel="icon" type="image/png" href="images/tqm-favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Playwright Training Guide</title><style>
-:root{--brand:#0054a6;--brand2:#00a6df;--text:#17324d;--muted:#60758a;--line:#d7e3ef}*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Tahoma,sans-serif;background:linear-gradient(180deg,#eef7ff,#f8fbff);color:var(--text);min-height:100vh}.top{background:linear-gradient(135deg,#003f80,#0054a6 58%,#00a6df);padding:34px 22px 74px;color:#fff}.wrap{max-width:980px;margin:auto}.logo{background:#fff;border-radius:14px;padding:10px 14px;width:240px;max-width:70%;display:block;margin-bottom:24px}.badge{display:inline-block;padding:5px 10px;border:1px solid #7be0c0;border-radius:999px;font-size:12px;font-weight:700}.top h1{font-size:38px;margin:12px 0 6px}.top p{margin:0;color:#dff3ff;font-size:17px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:-42px;padding:0 22px 50px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 14px 34px #003f801c;display:flex;flex-direction:column}.no{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e3f4ff;color:var(--brand);font-weight:800}.card h2{font-size:23px;margin:14px 0 6px}.card p{color:var(--muted);margin:0 0 16px}.topics{font-size:14px;line-height:1.8;margin-bottom:22px}.btn{margin-top:auto;display:inline-block;text-decoration:none;background:var(--brand);color:#fff;padding:11px 16px;border-radius:10px;font-weight:700;text-align:center}.btn:hover{background:#0070c9}.footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 28px}@media(max-width:720px){.cards{grid-template-columns:1fr}.top h1{font-size:30px}}
-</style></head><body><header class="top"><div class="wrap"><img class="logo" src="images/tqm73-logo.png" alt="TQM Insurance Broker"><span class="badge">● INTERNAL TRAINING</span><h1>Playwright Training Guide</h1><p>เลือกคู่มือที่ต้องการใช้งาน</p></div></header><main class="wrap cards"><section class="card"><div class="no">1</div><h2>Playwright Setup Guide</h2><p>เตรียมเครื่องและเครื่องมือสำหรับเริ่มใช้งาน Playwright บน Windows</p><div class="topics"><b>เนื้อหา:</b><br>1. Visual Studio Code<br>2. Node.js<br>3. Playwright<br>4. Claude Code</div><a class="btn" href="setup.html">เปิดคู่มือ →</a></section><section class="card"><div class="no">2</div><h2>Allure Report Guide</h2><p>คู่มือสำหรับติดตั้ง ตั้งค่า และใช้งาน Allure Report กับ Playwright</p><div class="topics"><b>แยกเป็นคู่มือเฉพาะ</b><br>เพื่อให้ผู้เรียนเปิดใช้งานตามหัวข้อที่ต้องการได้ง่าย</div><a class="btn" href="allure-report.html">เปิดคู่มือ →</a></section></main><div class="footer">TQM Internal QA Training • จัดทำโดย Sittikorn Muekdang (QA)</div></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+<link rel="icon" type="image/png" href="images/tqm-favicon.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playwright Training Guide</title>
+<style>
+:root{
+  --brand:#0054a6;--brand-dark:#003b78;--brand2:#00a6df;--cyan:#64d8ff;
+  --text:#17324d;--muted:#60758a;--line:#d7e3ef;--bg:#f5f9fd;--card:#fff;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Segoe UI,Tahoma,sans-serif;color:var(--text);background:
+  radial-gradient(circle at 12% 8%,#dff4ff 0,transparent 28%),
+  radial-gradient(circle at 88% 18%,#e8f7ff 0,transparent 25%),
+  linear-gradient(180deg,#eef8ff 0,#f8fbfe 58%,#f3f8fc 100%);min-height:100vh}
+a{color:inherit}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#002f63 0%,#004b96 52%,#00a6df 125%);color:#fff;padding:20px 24px 46px;isolation:isolate}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);z-index:-1}.hero:before{width:520px;height:520px;right:-190px;top:-270px;background:#33c4ff26;border:1px solid #ffffff22}.hero:after{width:340px;height:340px;left:-170px;bottom:-180px;background:#ffffff0d;border:1px solid #ffffff18}
+.grid-bg{position:absolute;inset:0;z-index:-2;opacity:.13;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 86%)}
+.wrap{max-width:1120px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.logo{background:#fff;border-radius:15px;padding:9px 13px;width:224px;max-width:62%;box-shadow:0 10px 30px #001d3b35}.internal{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #ffffff48;border-radius:999px;background:#ffffff12;font-size:12px;font-weight:800;letter-spacing:.08em;backdrop-filter:blur(8px)}.internal i{width:8px;height:8px;border-radius:50%;background:#5ff0b5;box-shadow:0 0 0 5px #5ff0b51b}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:38px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#bfeeff;margin-bottom:12px}.eyebrow:before{content:"";width:28px;height:2px;background:#57d3ff}.hero h1{font-size:46px;line-height:1.03;margin:0 0 10px;letter-spacing:-.025em}.hero h1 span{display:block;background:linear-gradient(90deg,#fff,#8ee6ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{font-size:16px;line-height:1.6;color:#d9f1ff;margin:0;max-width:670px}.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.hero-tag{padding:7px 11px;border-radius:999px;background:#ffffff13;border:1px solid #ffffff28;color:#effaff;font-size:13px;font-weight:700}
+.terminal{border:1px solid #ffffff25;background:#071b2acc;border-radius:20px;box-shadow:0 24px 70px #00172f55;overflow:hidden;backdrop-filter:blur(12px);transform:rotate(1.2deg)}.terminal-head{display:flex;align-items:center;gap:7px;padding:13px 15px;border-bottom:1px solid #ffffff12;background:#ffffff08}.dot{width:10px;height:10px;border-radius:50%}.dot:nth-child(1){background:#ff6f66}.dot:nth-child(2){background:#ffc857}.dot:nth-child(3){background:#5fe0a3}.terminal-title{margin-left:auto;font-size:11px;color:#91bad4;font-family:Consolas,monospace}.terminal-body{padding:16px 18px;font-family:Consolas,monospace;font-size:13px;line-height:1.7;color:#cae9fb}.prompt{color:#59d7ff}.ok{color:#73f2ba}.ai{color:#ffd972}.cursor{display:inline-block;width:8px;height:15px;background:#7bdcff;vertical-align:-2px;animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+.content{max-width:1120px;margin:0 auto;padding:26px 24px 52px;position:relative;z-index:2}.section-title{text-align:center;margin:0 0 24px;padding:0 12px}.section-title .kicker{font-size:12px;font-weight:900;color:var(--brand2);letter-spacing:.11em;text-transform:uppercase}.section-title h2{font-size:28px;line-height:1.25;margin:6px 0 7px}.section-title p{margin:0 auto;color:var(--muted);line-height:1.65;max-width:720px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{position:relative;background:#fff;border:1px solid #d8e6f2;border-radius:24px;padding:27px;box-shadow:0 18px 45px #003f8017;display:flex;flex-direction:column;min-height:345px;overflow:hidden;transition:.25s ease}.card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,var(--accent1),var(--accent2))}.card:after{content:attr(data-watermark);position:absolute;right:-4px;top:12px;font-size:74px;font-weight:900;color:#0054a608;letter-spacing:-.08em}.card:hover{transform:translateY(-7px);box-shadow:0 24px 58px #003f8028;border-color:#b9d8ef}.card.setup{--accent1:#0054a6;--accent2:#00a6df}.card.report{--accent1:#6b63ff;--accent2:#00a6df}.card.workshop{--accent1:#00a6df;--accent2:#17b978}.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.no{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#eef8ff,#dff3ff);color:var(--brand);font-weight:900;font-size:18px;border:1px solid #c9e7fa}.type{font-size:10px;font-weight:900;letter-spacing:.09em;padding:5px 8px;border-radius:999px;background:#eef7ff;color:#006bb5;border:1px solid #d6ecfb}.type.new{background:#eefbf5;color:#0a8a59;border-color:#bfead6}.card h3{font-size:23px;line-height:1.25;margin:18px 0 8px}.card p{color:var(--muted);margin:0 0 18px;line-height:1.65}.topics{font-size:14px;line-height:1.85;margin-bottom:24px;padding:13px 14px;border-radius:13px;background:#f7fafc;border:1px solid #e5edf5}.topics b{color:#27445f}.btn{margin-top:auto;display:flex;align-items:center;justify-content:space-between;text-decoration:none;background:linear-gradient(90deg,#004f9e,#0079ca);color:#fff;padding:12px 15px;border-radius:12px;font-weight:800;box-shadow:0 8px 20px #0054a624;transition:.2s ease}.btn span{font-size:18px}.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.workshop .btn{background:linear-gradient(90deg,#006bb5,#00a6df)}
+.path{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:30px auto 0;color:#49677f;font-size:13px}.path-step{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border-radius:999px;background:#fff;border:1px solid #dce8f1;box-shadow:0 6px 18px #003f800c}.path-step strong{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e6f5ff;color:#006db7;font-size:11px}.arrow{color:#8fa9bc;font-weight:800}.footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 30px}.footer b{color:#36566f}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.terminal{max-width:620px}.hero h1{font-size:44px}.cards{grid-template-columns:1fr}.card{min-height:auto}.content{max-width:760px}}
+@media(max-width:620px){.hero{padding:18px 18px 34px}.topbar{margin-bottom:30px}.internal{display:none}.hero h1{font-size:36px}.hero p{font-size:16px}.terminal{transform:none}.content{padding-left:16px;padding-right:16px}.section-title h2{font-size:24px}.path .arrow{display:none}.path{justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <img class="logo" src="images/tqm73-logo.png" alt="TQM Insurance Broker">
+      <div class="internal"><i></i> INTERNAL QA TRAINING</div>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">QA Automation Learning Hub</div>
+        <h1>Playwright <span>Training Guide</span></h1>
+        <p>เตรียมเครื่องให้พร้อม เรียนรู้การสร้าง Automated Test และต่อยอดการทำงานด้วย Claude Code พร้อมดูผลทดสอบผ่าน Report อย่างเป็นขั้นตอน</p>
+        <div class="hero-tags"><span class="hero-tag">Beginner Friendly</span><span class="hero-tag">Playwright</span><span class="hero-tag">Claude Code</span><span class="hero-tag">Allure Report</span><span class="hero-tag">GitHub</span></div>
+      </div>
+      <div class="terminal" aria-label="ตัวอย่าง Workflow ของ Workshop">
+        <div class="terminal-head"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="terminal-title">qa-workshop</span></div>
+        <div class="terminal-body">
+          <div><span class="prompt">$</span> pnpm exec playwright test</div>
+          <div><span class="ok">✓</span> browser opened</div>
+          <div><span class="ai">✦ Claude Code</span> → generated test</div>
+          <div><span class="ok">✓</span> 1 test passed</div>
+          <div><span class="prompt">$</span> allure report → ready <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+  <div class="section-title">
+    <div class="kicker">Choose your guide</div>
+    <h2>เลือกหัวข้อที่ต้องการเรียน</h2>
+    <p>แต่ละคู่มือแยกเป็นส่วนชัดเจน เพื่อเปิดใช้งานและเรียนตาม Workshop ได้ง่าย</p>
+  </div>
+
+  <section class="cards">
+    <article class="card setup" data-watermark="01">
+      <div class="card-top"><div class="no">01</div><span class="type">SETUP</span></div>
+      <h3>Playwright Setup Guide</h3>
+      <p>เตรียมเครื่องและเครื่องมือสำหรับเริ่มใช้งาน Playwright บน Windows ตั้งแต่พื้นฐาน</p>
+      <div class="topics"><b>เนื้อหา:</b><br>Visual Studio Code • Node.js<br>Playwright • Claude Code</div>
+      <a class="btn" href="setup.html">เปิดคู่มือ Setup <span>→</span></a>
+    </article>
+
+    <article class="card report" data-watermark="02">
+      <div class="card-top"><div class="no">02</div><span class="type">REPORT</span></div>
+      <h3>Allure Report Guide</h3>
+      <p>ติดตั้ง ตั้งค่า และใช้งาน Allure Report ร่วมกับ Playwright เพื่อดูผล Test ได้ชัดเจนขึ้น</p>
+      <div class="topics"><b>เหมาะสำหรับ:</b><br>ดูผล Test • Severity<br>Graphs • Custom Report</div>
+      <a class="btn" href="allure-report.html">เปิดคู่มือ Allure <span>→</span></a>
+    </article>
+
+    <article class="card workshop" data-watermark="03">
+      <div class="card-top"><div class="no">03</div><span class="type new">NEW WORKSHOP</span></div>
+      <h3>สร้าง Test ด้วย Claude Code</h3>
+      <p>ทดลอง Flow จริง แล้วอธิบายสิ่งที่ต้องการด้วยภาษาง่าย ๆ เพื่อให้ Claude Code ช่วยสร้าง Playwright Test</p>
+      <div class="topics"><b>Workshop:</b><br>ทดลอง Flow → สั่ง AI<br>ตรวจสอบ Code → Run Test</div>
+      <a class="btn" href="claude-code-test.html">เริ่ม Workshop <span>→</span></a>
+    </article>
+  </section>
+
+  <div class="path" aria-label="แนวทางการเรียน">
+    <span class="path-step"><strong>1</strong> เตรียมเครื่อง</span><span class="arrow">→</span>
+    <span class="path-step"><strong>2</strong> เรียนรู้เครื่องมือ</span><span class="arrow">→</span>
+    <span class="path-step"><strong>3</strong> ลงมือ Workshop</span><span class="arrow">→</span>
+    <span class="path-step"><strong>4</strong> ดูผล Test</span>
+  </div>
+</main>
+
+<footer class="footer">TQM Internal QA Training • จัดทำโดย <b>Sittikorn Muekdang (QA)</b></footer>
+</body>
+</html>
