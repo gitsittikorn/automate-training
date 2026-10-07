@@ -1,24 +1,42 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   reporter: [
-    ['html', { open: 'always' }]
+    ['html', { open: 'always' }],
+    ['allure-playwright']
   ],
 
   use: {
-    headless: false,
-    browserName: 'chromium',
-
     screenshot: 'on',
     video: 'on',
     trace: 'on',
   },
-});
 
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+      },
+    },
+    {
+      name: 'mobile-safari',
+      use: {
+        ...devices['iPhone 13'],
+      },
+    },
+  ],
+});
 
  
 
-
+//------  playwright.config.ts - default ------//
 // import { defineConfig, devices } from '@playwright/test';
 
 // /**
@@ -101,6 +119,51 @@ export default defineConfig({
 
 
  
+
+//------  playwright.config.ts  ------//
+// import { defineConfig } from '@playwright/test';
+
+// export default defineConfig({
+//   reporter: [
+//     ['html', { open: 'always' }]
+//   ],
+
+//   use: {
+//     headless: false,
+//     browserName: 'chromium',
+
+//     screenshot: 'on',
+//     video: 'on',
+//     trace: 'on',
+//   },
+// });
+
+
+
+//------  playwright.config.ts all device ------//
+// import { defineConfig, devices } from '@playwright/test';
+
+// export default defineConfig({
+//   reporter: [
+//     ['html', { open: 'always' }],
+//     ['allure-playwright']
+//   ],
+
+//   projects: [
+//     {
+//       name: 'chromium',
+//       use: { ...devices['Desktop Chrome'] },
+//     },
+//     {
+//       name: 'firefox',
+//       use: { ...devices['Desktop Firefox'] },
+//     },
+//     {
+//       name: 'mobile-safari',
+//       use: { ...devices['iPhone 13'] },
+//     },
+//   ],
+// });
 
 
 

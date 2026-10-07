@@ -1,2 +1,226 @@
-<!doctype html><html lang="th"><head>
-<link rel="icon" type="image/png" href="images/tqm-favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Allure Report Guide</title><style>body{margin:0;font-family:Segoe UI,Tahoma,sans-serif;background:#f3f7fb;color:#17324d}.box{max-width:760px;margin:80px auto;background:#fff;border:1px solid #d7e3ef;border-radius:20px;padding:38px;box-shadow:0 12px 30px #003f8018}h1{color:#0054a6}.btn{display:inline-block;margin-top:18px;background:#0054a6;color:#fff;text-decoration:none;padding:10px 15px;border-radius:9px}</style></head><body><div class="box"><h1>Allure Report Guide</h1><p>คู่มือ Allure Report ถูกแยกออกจาก Playwright Setup Guide แล้ว เพื่อจัดทำเป็นลิงก์เฉพาะตามโครงสร้าง Training Guide ใหม่</p><p><b>หมายเหตุ:</b> หน้านี้เป็นตำแหน่งสำหรับคู่มือ Allure Report โดยยังไม่ได้เพิ่มเนื้อหาใหม่ เพื่อไม่ให้สร้างขั้นตอนที่ยังไม่ได้ยืนยันจาก Master เดิม</p><a class="btn" href="index.html">← กลับหน้า Playwright Training Guide</a></div></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+<link rel="icon" type="image/png" href="images/tqm-favicon.png">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Allure Report Guide</title>
+<style>
+:root{--bg:#f3f7fb;--card:#fff;--text:#17324d;--muted:#60758a;--line:#d7e3ef;--brand:#0054a6;--brand2:#00a6df;--brand-dark:#003b78;--dev:#17b978;--note:#eef7ff;--warn:#fff8e8;--ok:#eefbf5}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Segoe UI,Tahoma,sans-serif;background:linear-gradient(180deg,#f8fbff 0,#f3f7fb 240px);color:var(--text);line-height:1.65}
+a{color:var(--brand)} code{font-family:Consolas,monospace;background:#eef4fa;padding:2px 5px;border-radius:5px;color:#0c416d}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,#003f80 0%,#0054a6 58%,#073763 100%);color:#eaf5ff;padding:24px 20px;overflow:auto;border-right:4px solid #00a6df;display:flex;flex-direction:column}
+aside h1{font-size:19px;margin:0 0 6px;color:white}aside p{margin:0 0 18px;font-size:13px;color:#cfe9ff}.nav a{display:block;text-decoration:none;color:#e2f3ff;padding:8px 10px;border-radius:8px;font-size:14px}.nav a:hover{background:#ffffff18;color:white}
+main{max-width:1100px;width:100%;padding:40px 44px 80px;margin:auto}.hero{background:linear-gradient(135deg,#003f80 0%,#0054a6 58%,#00a6df 135%);color:white;padding:38px;border-radius:22px;box-shadow:0 18px 40px #003f8024;margin-bottom:28px;position:relative;overflow:hidden}.hero:after{content:'A';position:absolute;right:34px;top:-4px;font-family:Segoe UI,Tahoma,sans-serif;font-size:120px;font-weight:900;color:#ffffff10}.hero h2{margin:0 0 8px;font-size:34px;position:relative;z-index:1}.hero p{margin:0;color:#e1f4ff;position:relative;z-index:1}.back{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:white;color:#0054a6;text-decoration:none;font-weight:700;padding:11px 16px;border-radius:10px;position:relative;z-index:1}
+.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;margin:0 0 22px;box-shadow:0 8px 20px #0f172a0b}.step-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}.num{flex:0 0 38px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#e3f4ff;color:#0054a6;font-weight:800;border:1px solid #bce8ff}.step h3{margin:2px 0 2px;font-size:22px}.step h4{font-size:18px;margin:22px 0 8px}.sub{color:var(--muted);font-size:14px}.shot{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px;display:block;background:#fff}.shot.medium{max-width:900px;margin-left:auto;margin-right:auto}.note,.warn,.ok{padding:14px 16px;border-radius:12px;margin:14px 0}.note{background:var(--note);border-left:4px solid #00a6df}.warn{background:var(--warn);border-left:4px solid #f5a623}.ok{background:var(--ok);border-left:4px solid var(--dev)}
+.code-wrap{position:relative;background:#08233d;color:#dff7ff;border-radius:12px;padding:16px 88px 16px 18px;margin:14px 0;font-family:Consolas,monospace;font-size:16px;border:1px solid #0d4f7d}.code-wrap pre,.code-wrap code{margin:0;white-space:pre-wrap;font:inherit;color:inherit;background:transparent;padding:0}.copy{position:absolute;right:10px;top:10px;border:0;background:#0054a6;color:white;padding:7px 10px;border-radius:8px;cursor:pointer}.copy:hover{background:#0070c9}.focus{border:1px solid #cbe2f4;background:#f8fbff;border-radius:12px;padding:14px 16px;margin:14px 0}.focus b{color:#003f80}.mini{font-size:13px;color:var(--muted)}
+.setup-complete{background:linear-gradient(135deg,#eafbf3,#f6fffb);border:1px solid #a8e9ca;border-left:5px solid #17b978;padding:18px 18px;border-radius:14px;margin:18px 0}.setup-complete .title{font-size:18px;font-weight:800;color:#0c7f51;margin-bottom:4px}.workshop-session-break{display:flex;align-items:center;gap:14px;margin:64px 0 18px;color:#0054a6;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.workshop-session-break:before,.workshop-session-break:after{content:'';height:2px;flex:1;background:linear-gradient(90deg,#c9d8e8,#0054a6)}.workshop-session-break:after{background:linear-gradient(90deg,#0054a6,#c9d8e8)}.workshop-session-break span{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border:1px solid #b9d6ef;border-radius:999px;background:#f4f9ff;white-space:nowrap}.workshop-session-break .dot{width:7px;height:7px;border-radius:50%;background:#00a6df;box-shadow:0 0 0 4px #00a6df1f}.workshop-divider{margin:56px 0 32px;padding:0;border-radius:20px;background:linear-gradient(135deg,#003f80 0%,#0054a6 62%,#00a6df 135%);border:0;color:#fff;box-shadow:0 16px 36px #003f8028;overflow:hidden;position:relative}.workshop-divider:after{content:'WORKSHOP';position:absolute;right:20px;top:-18px;font-size:62px;font-weight:900;letter-spacing:.04em;color:#ffffff0d}.workshop-divider .workshop-inner{position:relative;z-index:1;padding:24px 26px}.workshop-divider .workshop-eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;margin-bottom:9px;border-radius:999px;background:#ffffff20;border:1px solid #ffffff38;color:#fff;font-size:12px;font-weight:800;letter-spacing:.08em}.workshop-divider h3{margin:0 0 5px;font-size:25px;line-height:1.3;color:#fff}.workshop-divider p{margin:0;color:#e5f5ff;font-size:15px}.workshop-divider .workshop-arrow{display:inline-block;margin-right:7px;font-size:19px}.param{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}.param b{color:#0f172a}.mini{font-size:13px;color:var(--muted)}
+.brand-lockup{display:block;margin-bottom:14px;padding:10px 12px 14px;background:#fff;border-radius:14px;border:1px solid #ffffff66;box-shadow:0 8px 18px #001f3f26}.brand-logo{display:block;width:100%;height:auto;max-width:230px;margin:auto}.internal-badge{display:inline-flex;align-items:center;gap:6px;margin:6px 0 16px;padding:5px 9px;border-radius:999px;background:#17b97822;border:1px solid #65e3b2;color:#dffff3;font-size:12px;font-weight:700}.author-card{margin-top:auto;padding:10px 12px;border-radius:10px;background:#ffffff0d;border:1px solid #ffffff18;font-size:11px;color:#cfe4f5;opacity:.9}.author-card b{color:#eef8ff}.section-kicker{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:#dff4ff;color:#0054a6;font-weight:700;font-size:12px;margin-bottom:10px}.footer{color:var(--muted);text-align:center;margin-top:34px;font-size:13px}
+.nav details{margin:4px 0}.nav summary{cursor:pointer;padding:8px 10px;border-radius:8px;font-weight:700;color:#fff}.nav summary:hover{background:#ffffff18}.nav details a{padding-left:22px}.nav-section-label{display:flex;align-items:center;gap:8px;margin:16px 10px 7px 22px;color:#d8efff;font-size:10px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;white-space:nowrap}.nav-section-label:before,.nav-section-label:after{content:'';height:1px;flex:1;background:#ffffff4d}.nav-section-label:before{max-width:18px}.nav-section-label:after{background:linear-gradient(90deg,#ffffff66,#ffffff18)}.nav-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:#19c37d;color:#062e20;font-size:10px;font-weight:800;vertical-align:1px}
+.sidebar-back{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:auto;margin-bottom:10px;padding:9px 11px;border-radius:9px;background:#ffffff12;border:1px solid #ffffff2b;color:#eef8ff;text-decoration:none;font-size:12px;font-weight:700;transition:.18s ease}.sidebar-back:hover{background:#ffffff20;border-color:#ffffff55;color:#fff}.sidebar-back + .author-card{margin-top:0}
+@media(max-width:900px){.layout{display:block}aside{position:relative;height:auto}.nav{display:none}main{padding:22px 14px 50px}.hero{padding:26px}.hero h2{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+<div class="brand-lockup"><img class="brand-logo" src="images/tqm73-logo.png" alt="TQM Insurance Broker 73rd Anniversary"></div>
+<div class="internal-badge">● INTERNAL TRAINING</div>
+<h1>Allure Report Guide</h1>
+<p>Playwright + Allure Report</p>
+<nav class="nav">
+<details open><summary>ติดตั้ง Allure Report</summary>
+<a href="#allure-prepare">1. ตรวจสอบ Node.js / pnpm</a>
+<a href="#allure-cli">2. ติดตั้ง Allure CLI</a>
+<a href="#allure-verify">3. ตรวจสอบ Allure</a>
+<a href="#allure-adapter">4. ติดตั้ง Package สำหรับ Allure</a>
+<a href="#allure-packages">5. ตรวจสอบ Package <span class="nav-badge">✓ SETUP COMPLETE</span></a>
+<span class="nav-section-label">Workshop</span>
+<a href="#allure-config">6. ตั้งค่า Reporter</a>
+<a href="#allure-severity">7. จัดกลุ่ม Severity</a>
+<a href="#allure-run">8. Run Test</a>
+<a href="#allure-results">9. ตรวจสอบ allure-results</a>
+<a href="#allure-serve">10. เปิด Allure Report</a>
+<a href="#allure-read">11. อ่านผล Report <span class="nav-badge">DONE</span></a>
+</details>
+</nav>
+<a class="sidebar-back" href="index.html">← กลับหน้าหลัก</a>
+<div class="author-card"><b>จัดทำโดย</b><br>Sittikorn Muekdang (QA)</div>
+</aside>
+<main>
+<section class="hero"><div class="section-kicker">TQM INTERNAL • QA AUTOMATION</div><h2>ติดตั้งและใช้งาน Allure Report</h2><p>ติดตั้ง Allure Report สำหรับ Playwright ตั้งแต่ตรวจสอบเครื่องมือ ไปจนถึงเปิดดูผล Test พร้อม Screenshot, Video และ Trace</p></section>
+
+<section class="step" id="allure-prepare"><div class="step-head"><div class="num">1</div><div><h3>ตรวจสอบ Node.js และ pnpm</h3><div class="sub">ยืนยันว่าเครื่องมีเครื่องมือที่ต้องใช้ก่อนเริ่มติดตั้ง Allure</div></div></div>
+<p>เปิด <b>VS Code</b> → เมนู <b>Terminal</b> → <b>New Terminal</b> และใช้ <b>PowerShell Terminal</b> ที่เปิดอยู่ภายในโฟลเดอร์ Project</p>
+<p>เริ่มจากตรวจสอบ <b>Node.js</b> ด้วยคำสั่ง:</p>
+<div class="code-wrap"><code id="cmd-node">node --version</code><button class="copy" onclick="copyCode('cmd-node',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-01-node-version.png" alt="ตรวจสอบ Node.js version">
+<div class="note"><b>ความหมายของภาพ:</b> Terminal แสดง <code>v24.21.0</code> หมายถึงเครื่องสามารถเรียกใช้ Node.js ได้แล้ว เลข Version ของแต่ละเครื่องอาจไม่เท่ากัน</div>
+<p>จากนั้นตรวจสอบ <b>pnpm</b> ด้วยคำสั่ง:</p>
+<div class="code-wrap"><code id="cmd-pnpm">pnpm --version</code><button class="copy" onclick="copyCode('cmd-pnpm',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-02-pnpm-version.png" alt="ตรวจสอบ pnpm version">
+<div class="note"><b>ความหมายของภาพ:</b> Terminal แสดง <code>10.20.0</code> หมายถึง pnpm พร้อมใช้งานแล้ว เราจะใช้ pnpm สำหรับติดตั้ง Package ในหัวข้อนี้</div>
+</section>
+
+<section class="step" id="allure-cli"><div class="step-head"><div class="num">2</div><div><h3>ติดตั้ง Allure CLI</h3><div class="sub">ติดตั้งคำสั่ง <code>allure</code> ให้สามารถเรียกใช้จาก Terminal ได้</div></div></div>
+<p>ที่ <b>PowerShell Terminal ใน VS Code</b> รันคำสั่ง:</p>
+<div class="code-wrap"><code id="cmd-install-cli">pnpm add -g allure</code><button class="copy" onclick="copyCode('cmd-install-cli',this)">คัดลอก</button></div>
+<img class="shot" src="images/allure-03-install-cli.png" alt="ติดตั้ง Allure CLI ด้วย pnpm">
+<div class="ok"><b>ความหมายของภาพ:</b> บรรทัด <code>+ allure 3.20.1</code> และ <code>Done</code> หมายถึงติดตั้ง Allure CLI สำเร็จแล้ว</div>
+<div class="warn"><b>ถ้าเห็น WARN ไม่ต้องตกใจ:</b> ข้อความ <code>Tarball download average speed...</code> ในภาพเป็นเพียงคำเตือนว่าดาวน์โหลด Package ช้า ไม่ใช่ Error การติดตั้งยังสำเร็จได้ตามปกติ</div>
+</section>
+
+<section class="step" id="allure-verify"><div class="step-head"><div class="num">3</div><div><h3>ตรวจสอบว่า Allure CLI ใช้งานได้</h3><div class="sub">ทดสอบคำสั่ง Allure หลังติดตั้งก่อนเชื่อมต่อกับ Playwright</div></div></div>
+<div class="code-wrap"><code id="cmd-allure-version">allure --version</code><button class="copy" onclick="copyCode('cmd-allure-version',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-04-version.png" alt="ตรวจสอบ Allure version">
+<div class="ok"><b>ความหมายของภาพ:</b> Terminal แสดง <code>3.20.1</code> หมายถึงคำสั่ง <code>allure</code> สามารถใช้งานได้เรียบร้อยแล้ว</div>
+</section>
+
+<section class="step" id="allure-adapter"><div class="step-head"><div class="num">4</div><div><h3>ติดตั้ง Package สำหรับ Allure ใน Project</h3><div class="sub">ติดตั้งตัวเชื่อม Playwright กับ Allure และ Library สำหรับเพิ่มข้อมูล เช่น Severity</div></div></div>
+<p>ขั้นตอนนี้ใช้ <b>PowerShell Terminal ใน VS Code</b> และต้องอยู่ในโฟลเดอร์ Project เช่น <code>C:\TQM\all-automate\automate-training</code></p>
+<h4>4.1 ติดตั้ง <code>allure-playwright</code></h4>
+<p><code>allure-playwright</code> คือ Package ที่ทำหน้าที่ส่งผลการ Run จาก Playwright ไปสร้างข้อมูลในโฟลเดอร์ <code>allure-results</code></p>
+<div class="code-wrap"><code id="cmd-allure-playwright">pnpm add -D allure-playwright</code><button class="copy" onclick="copyCode('cmd-allure-playwright',this)">คัดลอก</button></div>
+<img class="shot" src="images/allure-05-install-playwright.png" alt="ติดตั้ง allure-playwright">
+<div class="ok"><b>ความหมายของภาพ:</b> ใต้หัวข้อ <code>devDependencies</code> มี <code>allure-playwright</code> และขั้นตอนจบด้วย <code>Done</code> หมายถึงติดตั้งตัวเชื่อม Playwright กับ Allure สำเร็จแล้ว</div>
+<div class="warn"><b>ถ้าเห็น WARN ไม่ต้องตกใจ:</b> ข้อความ <code>installed by a different package manager</code> หมายถึง Project นี้เคยติดตั้ง Package ด้วย package manager อื่นมาก่อน ไม่ใช่ Error ของ Allure หากจบด้วย <code>Done</code> สามารถทำขั้นต่อไปได้</div>
+<h4>4.2 ติดตั้ง <code>allure-js-commons</code></h4>
+<p><code>allure-js-commons</code> คือ Library ที่ใช้เพิ่มข้อมูลให้ Test Case เช่น <b>Severity</b>, Feature, Story หรือ Label ต่าง ๆ ใน Allure Report</p>
+<div class="code-wrap"><code id="cmd-allure-commons">pnpm add -D allure-js-commons</code><button class="copy" onclick="copyCode('cmd-allure-commons',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-05b-install-commons.png" alt="ติดตั้ง allure-js-commons">
+<div class="ok"><b>ความหมายของภาพ:</b> Terminal แสดง <code>+ allure-js-commons 3.13.0</code> และ <code>Done</code> หมายถึง Library สำหรับเพิ่มข้อมูลให้ Allure Test Case ถูกติดตั้งแล้ว</div>
+<div class="note"><b>จำง่าย ๆ:</b><br><code>allure-playwright</code> = ตัวเชื่อม Playwright → Allure<br><code>allure-js-commons</code> = เครื่องมือสำหรับใส่ข้อมูลเพิ่มให้ Test เช่น Severity</div>
+</section>
+
+<section class="step" id="allure-packages"><div class="step-head"><div class="num">5</div><div><h3>ตรวจสอบ Package ที่ติดตั้งใน Project</h3><div class="sub">ตรวจสอบว่า Package ที่ต้องใช้ถูกติดตั้งครบก่อนแก้ Code</div></div></div>
+<div class="code-wrap"><code id="cmd-list">pnpm list --depth=0</code><button class="copy" onclick="copyCode('cmd-list',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-06-list-packages-new.png" alt="รายการ package หลังติดตั้ง allure-js-commons">
+<div class="note"><b>ความหมายของภาพ:</b> ใน <code>devDependencies</code> ควรเห็นอย่างน้อย <code>@playwright/test</code>, <code>allure-playwright</code> และ <code>allure-js-commons</code> แสดงว่าเครื่องมือสำหรับ Run Test, สร้าง Allure Results และกำหนด Severity พร้อมใช้งานแล้ว</div>
+<div class="warn"><b>สำหรับผู้เรียน:</b> ไม่ต้องกังวลหากเลข Version ไม่ตรงกับภาพ ตัวเลขอาจเปลี่ยนตามวันที่ติดตั้ง ขอเพียง Package ทั้ง 3 รายการแสดงอยู่และไม่มี Error</div>
+<div class="setup-complete"><div class="title">✓ SETUP COMPLETE — เตรียม Allure เสร็จเรียบร้อย</div><div>เมื่อเห็น <code>@playwright/test</code>, <code>allure-playwright</code> และ <code>allure-js-commons</code> ในรายการ Package แสดงว่าเครื่องพร้อมสำหรับ Workshop แล้ว</div><div><b>ให้หยุดการเตรียมเครื่องไว้ที่ขั้นตอน 5</b> ขั้นตอนถัดไปจะเป็นการตั้งค่าและใช้งานจริงพร้อมผู้สอน</div></div>
+</section>
+
+<div class="workshop-session-break"><span><i class="dot"></i> Workshop Session</span></div>
+<div class="workshop-divider"><div class="workshop-inner"><div class="workshop-eyebrow">WORKSHOP • เริ่มทำพร้อมผู้สอน</div><h3><span class="workshop-arrow">▶</span>Workshop เริ่มจากจุดนี้</h3><p>หยุดการติดตั้งไว้ที่ขั้นตอน 5 ก่อน — ตั้งแต่ขั้นตอน 6 เป็นต้นไป ผู้สอนจะพาตั้งค่า Reporter, Severity, Run Test และเปิด Allure Report พร้อมกัน</p></div></div>
+<section class="step" id="allure-config"><div class="step-head"><div class="num">6</div><div><h3>เพิ่ม Allure Reporter ใน playwright.config.ts</h3><div class="sub">บอก Playwright ให้สร้างข้อมูลสำหรับ Allure ทุกครั้งที่ Run Test</div></div></div>
+<p>ใน <b>VS Code Explorer</b> คลิกไฟล์ <code>playwright.config.ts</code> จากนั้นหา <b>บรรทัดที่ตั้งค่า <code>reporter</code></b> ใกล้ด้านบนของไฟล์</p>
+<div class="focus"><b>จุดที่ต้อง Focus:</b> จากภาพตัวอย่าง ให้ดูประมาณ <b>บรรทัด 4–7</b> โดยเพิ่ม <code>['allure-playwright']</code> ต่อจาก HTML Reporter และต้องมีเครื่องหมาย comma หลังรายการ HTML Reporter</div>
+<div class="code-wrap"><pre id="cmd-config">reporter: [
+  ['html', { open: 'always' }],
+  ['allure-playwright']
+],</pre><button class="copy" onclick="copyCode('cmd-config',this)">คัดลอก</button></div>
+<img class="shot" src="images/allure-07-config-reporter.png" alt="เพิ่ม allure-playwright ใน playwright.config.ts">
+<div class="note"><b>ความหมายของภาพ:</b> <code>['html', { open: 'always' }]</code> ใช้สร้าง Playwright HTML Report ส่วน <code>['allure-playwright']</code> ใช้สร้างข้อมูลให้ Allure ดังนั้น Run Test ครั้งเดียวสามารถได้ผลสำหรับ Report ทั้งสองแบบ</div>
+</section>
+
+<section class="step" id="allure-severity"><div class="step-head"><div class="num">7</div><div><h3>จัดกลุ่ม Test Case ด้วย Severity</h3><div class="sub">กำหนดระดับความสำคัญของแต่ละ Test เพื่อให้ Allure Report แยกกลุ่มและกรองผลได้ง่าย</div></div></div>
+<p>ใน <b>VS Code Explorer</b> เปิดไฟล์ Test เช่น <code>tests/example.spec.ts</code> แล้วเพิ่ม Import และ Severity ให้แต่ละ Test Case</p>
+<div class="focus"><b>จุดที่ต้อง Focus จากภาพ:</b><br><b>①</b> เปิดไฟล์ <code>tests/example.spec.ts</code><br><b>②</b> เพิ่ม Import <code>allure-js-commons</code> บริเวณด้านบนของไฟล์<br><b>③</b> Test Case <code>has title</code> กำหนดเป็น <code>critical</code><br><b>④</b> Test Case <code>get started link</code> กำหนดเป็น <code>normal</code></div>
+<p><b>เพิ่ม Import ด้านบนของไฟล์:</b></p>
+<div class="code-wrap"><code id="cmd-import-allure">import * as allure from 'allure-js-commons';</code><button class="copy" onclick="copyCode('cmd-import-allure',this)">คัดลอก</button></div>
+<p><b>ตัวอย่างกำหนด Severity ให้ Test Case:</b></p>
+<div class="code-wrap"><pre id="cmd-severity-example">// npx playwright test tests/example.spec.ts --headed
+import { test, expect } from '@playwright/test';
+// import เครื่องมือ test และ expect จาก Playwright
+// test ใช้สำหรับสร้าง Test Case
+// expect ใช้สำหรับตรวจสอบว่าผลลัพธ์ที่ได้ ตรงตามที่คาดหวังหรือไม่
+import * as allure from 'allure-js-commons';
+
+test('has title', async ({ page }) =&gt; {
+  await allure.severity('critical');
+
+  // สร้าง Test Case ชื่อ &quot;has title&quot;
+  // page คือหน้า Browser ที่ Playwright เปิดให้เราใช้งาน
+
+  await page.goto('https://playwright.dev/bugs');
+  // เปิดเว็บไซต์ https://playwright.dev/bugs
+
+  await expect(page).toHaveTitle(/Playwright bugs/);
+  // ตรวจสอบว่า Title ของหน้าเว็บ
+  // มีคำว่า &quot;Playwright bugs&quot; อยู่หรือไม่
+});
+
+test('get started link', async ({ page }) =&gt; {
+  await allure.severity('normal');
+
+  // สร้าง Test Case ชื่อ &quot;get started link&quot;
+
+  await page.goto('https://playwright.dev/');
+  // เปิดเว็บไซต์ https://playwright.dev/
+
+  await page.getByRole('link', { name: 'Get started' }).click();
+  // ค้นหาลิงก์ที่มีชื่อว่า &quot;Get started&quot;
+  // แล้วสั่งคลิก
+
+  await expect(
+    page.getByRole('heading', { name: 'Installation' })
+  ).toBeVisible();
+  // ตรวจสอบว่าหลังจากคลิกแล้ว
+  // มีหัวข้อ &quot;Installation&quot; แสดงอยู่บนหน้าเว็บ
+});</pre><button class="copy" onclick="copyCode('cmd-severity-example',this)">คัดลอก</button></div>
+<img class="shot" src="images/allure-08-severity-code.png" alt="ตัวอย่างกำหนด Severity ใน example.spec.ts">
+<div class="ok"><b>สำหรับ Workshop:</b> ให้เปิดไฟล์ <code>tests/example.spec.ts</code> ใน <b>VS Code</b> แล้วแทนที่โค้ดเดิมในไฟล์ด้วยโค้ดเต็มจากกล่องด้านบน จากนั้นกด <b>Ctrl + S</b> เพื่อบันทึกไฟล์ ผู้เรียนจึงไม่ต้องหาว่าแต่ละบรรทัดต้องนำไปวางตรงตำแหน่งใด</div>
+<div class="note"><b>จุดที่เพิ่มสำหรับ Allure มี 3 ส่วน:</b><br>1) <code>import * as allure from 'allure-js-commons';</code> เพื่อเรียกใช้คำสั่งของ Allure<br>2) <code>await allure.severity('critical');</code> กำหนด Test Case <code>has title</code> เป็นระดับ Critical<br>3) <code>await allure.severity('normal');</code> กำหนด Test Case <code>get started link</code> เป็นระดับ Normal</div>
+<div class="note"><b>Severity คืออะไร:</b> เป็นระดับความสำคัญของ Test Case ใช้ช่วยจัดกลุ่มและกรองผลใน Allure Report เช่น Test สำคัญมากอาจกำหนดเป็น <code>critical</code> ส่วน Test ทั่วไปอาจใช้ <code>normal</code></div>
+<h4>คำสั่ง Severity ที่ใช้ได้</h4>
+<p>เลือกใช้ <b>เพียง 1 ค่า</b> ต่อ Test Case ตามระดับความสำคัญของ Test นั้น</p>
+<div class="code-wrap"><pre id="cmd-severity-values">await allure.severity('blocker');
+await allure.severity('critical');
+await allure.severity('normal');
+await allure.severity('minor');
+await allure.severity('trivial');</pre><button class="copy" onclick="copyCode('cmd-severity-values',this)">คัดลอก</button></div>
+<div class="note"><b>ความหมายแบบง่าย:</b><br><code>blocker</code> = ปัญหารุนแรงมากจนงานหลักไปต่อไม่ได้<br><code>critical</code> = ฟังก์ชันสำคัญมาก ควรให้ความสำคัญสูง<br><code>normal</code> = Test ทั่วไป<br><code>minor</code> = ความสำคัญต่ำกว่า Test ทั่วไป<br><code>trivial</code> = เรื่องเล็กน้อย ผลกระทบน้อย</div>
+<div class="focus"><b>ตัวอย่าง:</b> ถ้า Test Case เป็นขั้นตอนสำคัญของระบบ ให้ใส่ <code>await allure.severity('critical');</code> ไว้ด้านใน Test Case ใกล้บรรทัดแรกหลัง <code>test(...)</code> เพื่อให้หาและแก้ไขได้ง่าย</div>
+<div class="warn"><b>สำหรับ Training นี้:</b> ใช้เพียง <code>critical</code> และ <code>normal</code> ก่อน เพื่อให้เห็นความแตกต่างของการจัดกลุ่มโดยไม่เพิ่มความซับซ้อนมากเกินไป</div>
+</section>
+
+<section class="step" id="allure-run"><div class="step-head"><div class="num">8</div><div><h3>Run Playwright Test เพื่อสร้างข้อมูล Allure</h3><div class="sub">รัน Test หลังตั้งค่า Reporter เพื่อให้ Allure ได้รับผลการทดสอบ</div></div></div>
+<p>ในคู่มือนี้ใช้ <b>pnpm</b> เป็นหลัก ให้รัน Test ด้วยคำสั่งด้านล่าง:</p>
+<div class="code-wrap"><code id="cmd-run-test">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-run-test',this)">คัดลอก</button></div>
+<div class="note"><b>คำสั่งนี้ทำอะไร:</b> <code>tests/example.spec.ts</code> คือไฟล์ Test ที่ต้องการรัน และ <code>--headed</code> คือให้เปิด Browser ให้เห็นระหว่าง Test ทำงาน</div>
+<img class="shot" src="images/allure-08-run-test.png" alt="Playwright Test ผ่านหลังตั้งค่า Allure">
+<div class="warn"><b>หมายเหตุเกี่ยวกับภาพ:</b> ภาพตัวอย่างเดิมแสดงคำสั่ง <code>npx playwright test ...</code> แต่ Training นี้กำหนดให้ใช้ <b>pnpm</b> ดังนั้นให้ผู้เรียนคัดลอกคำสั่ง <code>pnpm playwright test ...</code> จากกล่องด้านบน</div>
+<div class="ok"><b>ความหมายของภาพ:</b> ข้อความ <code>2 passed</code> หมายถึง Test ผ่าน 2 Test Case หลังจากจบรอบนี้ Playwright จะสร้างข้อมูล Allure ตาม Reporter ที่ตั้งค่าไว้</div>
+</section>
+
+<section class="step" id="allure-results"><div class="step-head"><div class="num">9</div><div><h3>ตรวจสอบโฟลเดอร์ allure-results</h3><div class="sub">ยืนยันว่ามีข้อมูลดิบสำหรับใช้สร้าง Allure Report</div></div></div>
+<p>กลับมาที่ <b>VS Code Explorer</b> แล้วดูบริเวณโฟลเดอร์หลักของ Project ควรพบโฟลเดอร์ <code>allure-results</code></p>
+<img class="shot" src="images/allure-09-results-folder.png" alt="โฟลเดอร์ allure-results ใน VS Code">
+<div class="note"><b>ความหมายของภาพ:</b> การมีโฟลเดอร์ <code>allure-results</code> แสดงว่า <code>allure-playwright</code> ทำงานและบันทึกผล Test สำเร็จแล้ว โฟลเดอร์นี้เป็นข้อมูลต้นทางที่ Allure ใช้สร้างหน้า Report</div>
+</section>
+
+<section class="step" id="allure-serve"><div class="step-head"><div class="num">10</div><div><h3>เปิด Allure Report</h3><div class="sub">นำข้อมูลใน allure-results มาเปิดเป็นหน้า Report บน Browser</div></div></div>
+<p>กลับไปที่ <b>PowerShell Terminal ใน VS Code</b> แล้วรัน:</p>
+<div class="code-wrap"><code id="cmd-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-serve',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/allure-10-serve.png" alt="เปิด Allure Report ด้วย allure serve">
+<div class="ok"><b>ความหมายของภาพ:</b> ข้อความ <code>Allure is running on http://localhost:...</code> หมายถึง Allure Report เปิดเป็น Web Server ในเครื่องแล้ว Browser จะเปิดหน้า Report ให้ใช้งาน</div>
+<div class="note"><b>สำคัญ:</b> เลข Port เช่น <code>60938</code> อาจเปลี่ยนทุกครั้ง ไม่จำเป็นต้องได้เลขเดียวกับในภาพ และให้เปิด Terminal นี้ค้างไว้ระหว่างดู Report</div>
+</section>
+
+<section class="step" id="allure-read"><div class="step-head"><div class="num">11</div><div><h3>อ่านผล Test ใน Allure Report</h3><div class="sub">ดูสถานะ Test และหลักฐานที่ Playwright เก็บไว้จากการรันจริง</div></div></div>
+<img class="shot" src="images/allure-11-report-detail.png" alt="รายละเอียด Test Case ใน Allure Report">
+<div class="note"><b>ความหมายของภาพ:</b> หน้า Test Case แสดงสถานะ <b>Passed</b>, ระยะเวลา, Labels และลำดับ Test body พร้อมหลักฐาน เช่น <b>Playwright Trace</b>, <b>Screenshot</b> และ <b>Video</b> หาก Project ตั้งค่าให้เก็บข้อมูลเหล่านี้ไว้</div>
+<p>ส่วนนี้เหมาะสำหรับตรวจสอบว่า Test ทำอะไรไปบ้าง และใช้ข้อมูล Screenshot / Video / Trace ช่วยวิเคราะห์เมื่อ Test Fail</p>
+<img class="shot" src="images/allure-12b-graphs-current.png" alt="กราฟสรุปผล Passed และ Failed ใน Allure Report">
+<div class="note"><b>ความหมายของภาพ:</b> หน้า <b>Graphs</b> ใช้ดูภาพรวมของผล Test เช่นกราฟ <b>Current status</b> แสดงสัดส่วน Passed / Failed และกราฟ <b>Test results by severities</b> แสดงจำนวน Test แยกตาม Severity</div>
+<div class="warn"><b>ถ้าเห็น No history information available หรือ No results:</b> หมายถึงกราฟนั้นต้องใช้ข้อมูลย้อนหลังหรือ Label เพิ่มเติมที่ยังไม่ได้ตั้งค่า ไม่ได้หมายความว่า Allure ติดตั้งผิด</div>
+<h4>กรอง Test ตาม Severity</h4>
+<p>ที่หน้า <b>Results</b> คลิกตัวกรอง <b>Severity</b> แล้วเลือกค่าที่ต้องการ เช่น <code>Critical</code> และ <code>Normal</code> เพื่อแสดงเฉพาะ Test Case ในกลุ่มนั้น</p>
+<img class="shot" src="images/allure-13-severity-filter.png" alt="กรองผล Test ตาม Severity ใน Allure Report">
+<div class="note"><b>ความหมายของภาพ:</b> Allure Report สามารถใช้ Severity เป็นตัวกรองได้ ทำให้ผู้ใช้เลือกดูเฉพาะ Test ที่มีความสำคัญระดับที่ต้องการ เช่น Critical หรือ Normal โดยไม่ต้องไล่ดู Test ทั้งหมดทีละรายการ</div>
+<div class="ok"><b>ติดตั้งและทดสอบ Allure Report สำเร็จ</b><br>เมื่อมาถึงขั้นนี้ ผู้ใช้สามารถ Run Playwright Test → ได้ <code>allure-results</code> → เปิด Report ด้วย <code>allure serve allure-results</code> และดูรายละเอียด Test บน Browser ได้แล้ว</div>
+</section>
+
+<div class="footer">TQM Internal QA Guide • Playwright Training • Allure Report<br>จัดทำโดย Sittikorn Muekdang (QA)</div>
+</main>
+</div>
+<script>
+async function copyCode(id,btn){
+ const text=document.getElementById(id).innerText;
+ try{await navigator.clipboard.writeText(text);}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();}
+ const old=btn.textContent;btn.textContent='คัดลอกแล้ว ✓';setTimeout(()=>btn.textContent=old,1500);
+}
+</script>
+</body>
+</html>
