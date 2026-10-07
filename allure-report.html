@@ -37,12 +37,12 @@ main{max-width:1100px;width:100%;padding:40px 44px 80px;margin:auto}.hero{backgr
 <a href="#allure-adapter">4. ติดตั้ง Package สำหรับ Allure</a>
 <a href="#allure-packages">5. ตรวจสอบ Package <span class="nav-badge">✓ SETUP COMPLETE</span></a>
 <span class="nav-section-label">Workshop</span>
-<a href="#allure-config">6. ตั้งค่า Reporter</a>
-<a href="#allure-severity">7. จัดกลุ่ม Severity</a>
-<a href="#allure-run">8. Run Test</a>
-<a href="#allure-results">9. ตรวจสอบ allure-results</a>
-<a href="#allure-serve">10. เปิด Allure Report</a>
-<a href="#allure-read">11. อ่านผล Report <span class="nav-badge">DONE</span></a>
+<a href="#workshop-baseline">6. เตรียมไฟล์ตัวอย่างให้เหมือนกัน</a>
+<a href="#allure-config">7. ตั้งค่า Reporter</a>
+<a href="#allure-normal">8. Report แบบปกติ (Passed)</a>
+<a href="#allure-failed">9. ตัวอย่าง Test Failed</a>
+<a href="#allure-severity">10. จัดกลุ่ม Severity</a>
+<a href="#allure-custom">11. Custom กราฟใน Allure <span class="nav-badge">DONE</span></a>
 </details>
 </nav>
 <a class="sidebar-back" href="index.html">← กลับหน้าหลัก</a>
@@ -103,113 +103,316 @@ main{max-width:1100px;width:100%;padding:40px 44px 80px;margin:auto}.hero{backgr
 
 <div class="workshop-session-break"><span><i class="dot"></i> Workshop Session</span></div>
 <div class="workshop-divider"><div class="workshop-inner"><div class="workshop-eyebrow">WORKSHOP • เริ่มทำพร้อมผู้สอน</div><h3><span class="workshop-arrow">▶</span>Workshop เริ่มจากจุดนี้</h3><p>หยุดการติดตั้งไว้ที่ขั้นตอน 5 ก่อน — ตั้งแต่ขั้นตอน 6 เป็นต้นไป ผู้สอนจะพาตั้งค่า Reporter, Severity, Run Test และเปิด Allure Report พร้อมกัน</p></div></div>
-<section class="step" id="allure-config"><div class="step-head"><div class="num">6</div><div><h3>เพิ่ม Allure Reporter ใน playwright.config.ts</h3><div class="sub">บอก Playwright ให้สร้างข้อมูลสำหรับ Allure ทุกครั้งที่ Run Test</div></div></div>
-<p>ใน <b>VS Code Explorer</b> คลิกไฟล์ <code>playwright.config.ts</code> จากนั้นหา <b>บรรทัดที่ตั้งค่า <code>reporter</code></b> ใกล้ด้านบนของไฟล์</p>
-<div class="focus"><b>จุดที่ต้อง Focus:</b> จากภาพตัวอย่าง ให้ดูประมาณ <b>บรรทัด 4–7</b> โดยเพิ่ม <code>['allure-playwright']</code> ต่อจาก HTML Reporter และต้องมีเครื่องหมาย comma หลังรายการ HTML Reporter</div>
-<div class="code-wrap"><pre id="cmd-config">reporter: [
-  ['html', { open: 'always' }],
-  ['allure-playwright']
-],</pre><button class="copy" onclick="copyCode('cmd-config',this)">คัดลอก</button></div>
-<img class="shot" src="images/allure-07-config-reporter.png" alt="เพิ่ม allure-playwright ใน playwright.config.ts">
-<div class="note"><b>ความหมายของภาพ:</b> <code>['html', { open: 'always' }]</code> ใช้สร้าง Playwright HTML Report ส่วน <code>['allure-playwright']</code> ใช้สร้างข้อมูลให้ Allure ดังนั้น Run Test ครั้งเดียวสามารถได้ผลสำหรับ Report ทั้งสองแบบ</div>
-</section>
-
-<section class="step" id="allure-severity"><div class="step-head"><div class="num">7</div><div><h3>จัดกลุ่ม Test Case ด้วย Severity</h3><div class="sub">กำหนดระดับความสำคัญของแต่ละ Test เพื่อให้ Allure Report แยกกลุ่มและกรองผลได้ง่าย</div></div></div>
-<p>ใน <b>VS Code Explorer</b> เปิดไฟล์ Test เช่น <code>tests/example.spec.ts</code> แล้วเพิ่ม Import และ Severity ให้แต่ละ Test Case</p>
-<div class="focus"><b>จุดที่ต้อง Focus จากภาพ:</b><br><b>①</b> เปิดไฟล์ <code>tests/example.spec.ts</code><br><b>②</b> เพิ่ม Import <code>allure-js-commons</code> บริเวณด้านบนของไฟล์<br><b>③</b> Test Case <code>has title</code> กำหนดเป็น <code>critical</code><br><b>④</b> Test Case <code>get started link</code> กำหนดเป็น <code>normal</code></div>
-<p><b>เพิ่ม Import ด้านบนของไฟล์:</b></p>
-<div class="code-wrap"><code id="cmd-import-allure">import * as allure from 'allure-js-commons';</code><button class="copy" onclick="copyCode('cmd-import-allure',this)">คัดลอก</button></div>
-<p><b>ตัวอย่างกำหนด Severity ให้ Test Case:</b></p>
-<div class="code-wrap"><pre id="cmd-severity-example">// npx playwright test tests/example.spec.ts --headed
+<section class="step" id="workshop-baseline"><div class="step-head"><div class="num">6</div><div><h3>เตรียมไฟล์ตัวอย่างให้เหมือนกัน</h3><div class="sub">ให้ผู้เรียนเริ่ม Workshop จาก <code>example.spec.ts</code> ชุดเดียวกัน เพื่อให้ผลที่เห็นตรงกับเอกสารและลดปัญหาระหว่างเรียน Online</div></div></div>
+<p>ใน <b>VS Code Explorer</b> เปิดไฟล์ <code>tests/example.spec.ts</code> แล้วเปลี่ยนโค้ดทั้งไฟล์ให้ตรงกับตัวอย่างด้านล่าง</p>
+<div class="focus"><b>วิธีทำสำหรับผู้เรียน:</b> คลิกในไฟล์ <code>example.spec.ts</code> → กด <code>Ctrl + A</code> → กดปุ่ม <b>คัดลอก</b> ด้านล่าง → Paste ทับโค้ดเดิม → กด <code>Ctrl + S</code></div>
+<img class="shot" src="images/2026-10-07_114953.png" alt="โค้ดเริ่มต้น example.spec.ts ก่อนเริ่ม Workshop">
+<div class="code-wrap"><pre id="code-workshop-baseline">// pnpm playwright test tests/example.spec.ts --headed
 import { test, expect } from '@playwright/test';
 // import เครื่องมือ test และ expect จาก Playwright
 // test ใช้สำหรับสร้าง Test Case
 // expect ใช้สำหรับตรวจสอบว่าผลลัพธ์ที่ได้ ตรงตามที่คาดหวังหรือไม่
 import * as allure from 'allure-js-commons';
 
-test('has title', async ({ page }) =&gt; {
+
+test('has title', async ({ page }) => {
   await allure.severity('critical');
 
-  // สร้าง Test Case ชื่อ &quot;has title&quot;
+  // สร้าง Test Case ชื่อ "has title"
   // page คือหน้า Browser ที่ Playwright เปิดให้เราใช้งาน
 
-  await page.goto('https://playwright.dev/bugs');
-  // เปิดเว็บไซต์ https://playwright.dev/bugs
+  await page.goto('https://playwright.dev/');
+  // เปิดเว็บไซต์ https://playwright.dev/
 
-  await expect(page).toHaveTitle(/Playwright bugs/);
+  await expect(page).toHaveTitle(/Playwright/);
   // ตรวจสอบว่า Title ของหน้าเว็บ
-  // มีคำว่า &quot;Playwright bugs&quot; อยู่หรือไม่
+  // มีคำว่า "Playwright" อยู่หรือไม่
 });
 
-test('get started link', async ({ page }) =&gt; {
+
+test('get started link', async ({ page }) => {
   await allure.severity('normal');
 
-  // สร้าง Test Case ชื่อ &quot;get started link&quot;
+  // สร้าง Test Case ชื่อ "get started link"
 
   await page.goto('https://playwright.dev/');
   // เปิดเว็บไซต์ https://playwright.dev/
 
   await page.getByRole('link', { name: 'Get started' }).click();
-  // ค้นหาลิงก์ที่มีชื่อว่า &quot;Get started&quot;
+  // ค้นหาลิงก์ที่มีชื่อว่า "Get started"
   // แล้วสั่งคลิก
 
   await expect(
     page.getByRole('heading', { name: 'Installation' })
   ).toBeVisible();
   // ตรวจสอบว่าหลังจากคลิกแล้ว
-  // มีหัวข้อ &quot;Installation&quot; แสดงอยู่บนหน้าเว็บ
-});</pre><button class="copy" onclick="copyCode('cmd-severity-example',this)">คัดลอก</button></div>
-<img class="shot" src="images/allure-08-severity-code.png" alt="ตัวอย่างกำหนด Severity ใน example.spec.ts">
-<div class="ok"><b>สำหรับ Workshop:</b> ให้เปิดไฟล์ <code>tests/example.spec.ts</code> ใน <b>VS Code</b> แล้วแทนที่โค้ดเดิมในไฟล์ด้วยโค้ดเต็มจากกล่องด้านบน จากนั้นกด <b>Ctrl + S</b> เพื่อบันทึกไฟล์ ผู้เรียนจึงไม่ต้องหาว่าแต่ละบรรทัดต้องนำไปวางตรงตำแหน่งใด</div>
-<div class="note"><b>จุดที่เพิ่มสำหรับ Allure มี 3 ส่วน:</b><br>1) <code>import * as allure from 'allure-js-commons';</code> เพื่อเรียกใช้คำสั่งของ Allure<br>2) <code>await allure.severity('critical');</code> กำหนด Test Case <code>has title</code> เป็นระดับ Critical<br>3) <code>await allure.severity('normal');</code> กำหนด Test Case <code>get started link</code> เป็นระดับ Normal</div>
-<div class="note"><b>Severity คืออะไร:</b> เป็นระดับความสำคัญของ Test Case ใช้ช่วยจัดกลุ่มและกรองผลใน Allure Report เช่น Test สำคัญมากอาจกำหนดเป็น <code>critical</code> ส่วน Test ทั่วไปอาจใช้ <code>normal</code></div>
+  // มีหัวข้อชื่อ "Installation" แสดงอยู่บนหน้าเว็บ
+});</pre><button class="copy" onclick="copyCode('code-workshop-baseline',this)">คัดลอก</button></div>
+<div class="note"><b>ทำไปเพื่ออะไร:</b> เมื่อทุกคนใช้ไฟล์เริ่มต้นชุดเดียวกัน ผลการ Run, จำนวน Test Case และภาพใน Allure Report จะใกล้เคียงกับคู่มือ ทำให้ผู้สอนช่วยแก้ปัญหาได้ง่ายขึ้น</div>
+</section>
+
+<section class="step" id="allure-config"><div class="step-head"><div class="num">7</div><div><h3>เพิ่ม Allure Reporter ใน playwright.config.ts</h3><div class="sub">บอก Playwright ให้สร้างข้อมูลสำหรับ Allure ทุกครั้งที่ Run Test</div></div></div>
+<p>ใน <b>VS Code Explorer</b> เปิดไฟล์ <code>playwright.config.ts</code> สำหรับ Training นี้ให้ใช้โค้ดทั้งไฟล์ด้านล่าง เพื่อให้ทุกคนเริ่มจาก Config เดียวกัน</p>
+<div class="focus"><b>วิธีทำสำหรับผู้เรียน:</b> คลิกในไฟล์ <code>playwright.config.ts</code> → กด <code>Ctrl + A</code> → กดปุ่ม <b>คัดลอก</b> ด้านล่าง → Paste ทับโค้ดเดิม → กด <code>Ctrl + S</code></div>
+<div class="code-wrap"><pre id="cmd-config">import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  reporter: [
+    ['html', { open: 'always' }],
+    ['allure-playwright']
+  ],
+
+  use: {
+    headless: false,
+    browserName: 'chromium',
+
+    screenshot: 'on',
+    video: 'on',
+    trace: 'on',
+  },
+});</pre><button class="copy" onclick="copyCode('cmd-config',this)">คัดลอก</button></div>
+<img class="shot" src="images/allure-07-config-reporter.png" alt="เพิ่ม allure-playwright ใน playwright.config.ts">
+<div class="note"><b>ความหมายของ Code:</b> <code>html</code> ใช้สร้าง Playwright HTML Report, <code>allure-playwright</code> ใช้สร้างข้อมูลใน <code>allure-results</code> ส่วน <code>screenshot</code>, <code>video</code> และ <code>trace</code> จะเก็บหลักฐานทุกครั้งที่ Run Test ดังนั้น Run Test ครั้งเดียวจะมีข้อมูลพร้อมสำหรับ Report ทั้งสองแบบ</div>
+</section>
+
+
+<section class="step" id="allure-normal"><div class="step-head"><div class="num">8</div><div><h3>ดู Allure Report แบบปกติเมื่อ Test ผ่าน</h3><div class="sub">เริ่มจาก Run Test ให้ผ่านก่อน เพื่อให้ผู้เรียนเห็น Flow ปกติของ Allure ตั้งแต่ Run Test จนถึงเปิด Report</div></div></div>
+<p><b>ลำดับนี้ใช้สำหรับสาธิต Report แบบปกติ โดยยังไม่มี Test Failed</b> ให้ทำตามภาพจากบนลงล่าง</p>
+
+<h4>8.1 Run Test</h4>
+<p>เปิด <b>PowerShell Terminal ใน VS Code</b> แล้วรัน:</p>
+<div class="code-wrap"><code id="cmd-normal-run">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-normal-run',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_114954.png" alt="Run Playwright Test แบบปกติ">
+<div class="note"><b>ความหมายของภาพ:</b> Playwright Run Test จากไฟล์ <code>tests/example.spec.ts</code> และผล Test ผ่านทั้งหมด จึงเป็นจุดเริ่มต้นสำหรับดู Allure Report แบบปกติ</div>
+
+<h4>8.2 ตรวจสอบโฟลเดอร์ allure-results</h4>
+<img class="shot" src="images/2026-10-07_115017.png" alt="ตรวจสอบโฟลเดอร์ allure-results">
+<div class="note"><b>ความหมายของภาพ:</b> หลัง Run Test จะมีโฟลเดอร์ <code>allure-results</code> ที่ root ของ Project แสดงว่า <code>allure-playwright</code> บันทึกข้อมูลสำหรับสร้าง Allure Report แล้ว</div>
+
+<h4>8.3 เปิด Allure Report</h4>
+<p>กลับไปที่ <b>PowerShell Terminal ใน VS Code</b> แล้วรัน:</p>
+<div class="code-wrap"><code id="cmd-normal-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-normal-serve',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/2026-10-07_115300.png" alt="เปิด Allure Report แบบปกติ">
+<div class="note"><b>ความหมายของภาพ:</b> ข้อความ <code>Allure is running on http://localhost:...</code> หมายถึง Allure เปิด Report บนเครื่องสำเร็จแล้ว เลข Port อาจเปลี่ยนในแต่ละครั้ง</div>
+
+<h4>8.4 ดูรายละเอียด Test Case</h4>
+<img class="shot" src="images/2026-10-07_115318.png" alt="รายละเอียด Test Case ใน Allure Report">
+<div class="note"><b>ความหมายของภาพ:</b> ในหน้า Test Case สามารถดูสถานะ Passed, Test body, Screenshot, Video และ Trace ที่ Playwright เก็บไว้ ช่วยตรวจสอบหลักฐานของการ Run ได้จากหน้าเดียว</div>
+
+<h4>8.5 ดู Graphs ของ Allure</h4>
+<img class="shot" src="images/2026-10-07_115406.png" alt="Graphs ของ Allure Report แบบปกติ">
+<div class="note"><b>ความหมายของภาพ:</b> หน้า <b>Graphs</b> ช่วยสรุปผล Test ในรูปกราฟ เช่น Current status และระยะเวลาในการ Run ทำให้เห็นภาพรวมได้ง่ายกว่าการไล่ดู Test ทีละรายการ</div>
+
+<h4>8.6 Run Test หลาย Browser / Device</h4>
+<p>ตัวอย่างนี้แสดงลำดับตั้งแต่กำหนด Browser / Device ใน <code>playwright.config.ts</code> ไปจนถึง Run Test และดูผลรวมใน Allure Report</p>
+<p>เปิดไฟล์ <code>playwright.config.ts</code> ใน <b>VS Code</b> แล้วใช้ตัวอย่างด้านล่างได้เลย สำหรับ Training นี้ให้ Copy โค้ดทั้งหมดแทนไฟล์เดิม เพื่อให้ทุกคนได้ Config เหมือนกัน</p>
+<div class="code-wrap"><pre id="code-multi-browser-config">import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  reporter: [
+    ['html', { open: 'always' }],
+    ['allure-playwright']
+  ],
+
+  use: {
+    screenshot: 'on',
+    video: 'on',
+    trace: 'on',
+  },
+
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+      },
+    },
+    {
+      name: 'mobile-safari',
+      use: {
+        ...devices['iPhone 13'],
+      },
+    },
+  ],
+});</pre><button class="copy" onclick="copyCode('code-multi-browser-config',this)">คัดลอก</button></div>
+<div class="focus"><b>วิธีทำ:</b> เปิด <code>playwright.config.ts</code> → กด <code>Ctrl + A</code> → Paste โค้ดด้านบน → กด <code>Ctrl + S</code> เพื่อบันทึก</div>
+
+<img class="shot" src="images/2026-10-07_134112.png" alt="ตั้งค่า Playwright ให้ Run หลาย Browser Device">
+<div class="note"><b>ภาพที่ 1 — ตั้งค่า Browser / Device:</b> ในไฟล์ <code>playwright.config.ts</code> กำหนด Project ที่ต้องการทดสอบ เช่น Chromium, Firefox และ Mobile Safari เพื่อให้ Test Case เดียวกันถูกนำไปรันกับหลาย Browser / Device</div>
+
+<p>จากนั้นเปิด <b>VS Code Terminal (PowerShell)</b> และใช้คำสั่งนี้เพื่อ Run Test:</p>
+<div class="code-wrap"><code id="cmd-normal-all">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-normal-all',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_134158.png" alt="Run Test หลาย Browser Device">
+<div class="note"><b>ภาพที่ 2 — Run Test:</b> ตัวอย่างมี 2 Test Case และ 3 Project จึงเกิดผลการ Run รวม 6 รายการ เมื่อขึ้น <code>6 passed</code> หมายถึงทุก Test ผ่านครบทุก Browser / Device ที่กำหนดไว้</div>
+
+<img class="shot" src="images/2026-10-07_140501.png" alt="Allure Report หลัง Run หลาย Browser Device">
+<div class="note"><b>ภาพที่ 3 — ดูผลใน Allure Report:</b> Allure รวมผลจากหลาย Browser / Device ไว้ใน Report เดียว ทำให้เห็นจำนวน Test ทั้งหมดและสถานะของแต่ละรายการได้ในหน้าเดียว</div>
+
+<h4>8.7 ดู Graphs หลัง Run หลาย Browser / Device</h4>
+<img class="shot" src="images/2026-10-07_140604.png" alt="Graphs หลัง Run หลาย Browser Device">
+<div class="warn"><b>ถ้าเห็น No history information available หรือ No results:</b> กราฟบางชนิดต้องใช้ข้อมูลย้อนหลังหรือ Label เพิ่มเติม ไม่ได้หมายความว่า Allure ติดตั้งผิด สำหรับ Training นี้ให้ Focus ที่กราฟซึ่งมีข้อมูลจากการ Run ปัจจุบันก่อน</div>
+</section>
+
+<section class="step" id="allure-failed"><div class="step-head"><div class="num">9</div><div><h3>ตัวอย่าง Allure Report เมื่อ Test Failed</h3><div class="sub">ตั้งใจแก้ Test ให้ Fail เพื่อสาธิตว่า Allure ช่วยดู Error และหลักฐานประกอบได้อย่างไร</div></div></div>
+<div class="warn"><b>ขั้นตอนนี้ตั้งใจทำให้ Test Fail เพื่อใช้สอนเท่านั้น</b> ไม่ใช่ปัญหาจากการติดตั้ง Allure</div>
+
+<h4>9.1 แก้ Test ให้เจอ Bug แบบตัวอย่าง</h4>
+<p>เปิด <code>tests/example.spec.ts</code> ใน <b>VS Code</b> แล้ว Copy โค้ดทั้งหมดด้านล่างไปแทนไฟล์เดิม ตัวอย่างนี้ตั้งใจทำให้ Test Case <code>has title</code> Fail เพื่อใช้สาธิตการอ่าน Error และ Allure Report</p>
+<div class="code-wrap"><pre id="code-failed-example-full">// npx playwright test tests/example.spec.ts --headed
+import { test, expect } from '@playwright/test';
+// import เครื่องมือ test และ expect จาก Playwright
+// test ใช้สำหรับสร้าง Test Case
+// expect ใช้สำหรับตรวจสอบว่าผลลัพธ์ที่ได้ ตรงตามที่คาดหวังหรือไม่
+import * as allure from 'allure-js-commons';
+
+
+test('has title', async ({ page }) =&gt; {
+ await allure.severity('critical');
+
+  // สร้าง Test Case ชื่อ "has title"
+  // page คือหน้า Browser ที่ Playwright เปิดให้เราใช้งาน
+
+  await page.goto('https://playwright.dev/bugs');
+  // เปิดเว็บไซต์ https://playwright.dev/
+
+  await expect(page).toHaveTitle(/Playwright bugs/);
+  // ตรวจสอบว่า Title ของหน้าเว็บ
+  // มีคำว่า "Playwright" อยู่หรือไม่
+});
+
+
+test('get started link', async ({ page }) =&gt; {
+await allure.severity('normal');
+
+  // สร้าง Test Case ชื่อ "get started link"
+
+  await page.goto('https://playwright.dev/');
+  // เปิดเว็บไซต์ https://playwright.dev/
+
+  await page.getByRole('link', { name: 'Get started' }).click();
+  // ค้นหาลิงก์ที่มีชื่อว่า "Get started"
+  // แล้วสั่งคลิก
+
+  await expect(
+    page.getByRole('heading', { name: 'Installation' })
+  ).toBeVisible();
+  // ตรวจสอบว่าหลังจากคลิกแล้ว
+  // มีหัวข้อชื่อ "Installation" แสดงอยู่บนหน้าเว็บ
+});</pre><button class="copy" onclick="copyCode('code-failed-example-full',this)">คัดลอก</button></div>
+<div class="focus"><b>วิธีทำ:</b> เปิด <code>tests/example.spec.ts</code> → กด <code>Ctrl + A</code> → Paste โค้ดด้านบน → กด <code>Ctrl + S</code></div>
+<img class="shot" src="images/2026-10-07_141352.png" alt="ตัวอย่างแก้ Test ให้ Fail">
+<div class="note"><b>ความหมายของภาพ:</b> ตัวอย่างเปลี่ยน URL ไปที่ <code>https://playwright.dev/bugs</code> และตรวจสอบ Title ที่ไม่ตรงกับหน้าจริง จึงตั้งใจทำให้ Test Fail เพื่อใช้ดู Report กรณีพบปัญหา</div>
+
+<h4>9.2 Run Test แล้วดู Error ใน Terminal</h4>
+<div class="code-wrap"><code id="cmd-fail-run">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-fail-run',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_141402.png" alt="Playwright Test Failed ใน Terminal">
+<div class="note"><b>ความหมายของภาพ:</b> Terminal แสดง Expected, Received และตำแหน่งของ Test ที่ Fail ช่วยให้รู้ว่า Assertion ใดไม่ตรงกับผลจริง</div>
+
+<h4>9.3 เปิด Allure Report ของรอบที่มี Failed</h4>
+<div class="code-wrap"><code id="cmd-fail-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-fail-serve',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/2026-10-07_141431.png" alt="เปิด Allure Report หลัง Test Fail">
+
+<h4>9.4 ดูสรุป Passed / Failed</h4>
+<img class="shot" src="images/2026-10-07_141519.png" alt="Allure Results มี Passed และ Failed">
+<div class="note"><b>ความหมายของภาพ:</b> หน้า Results แสดงจำนวน Test ทั้งหมด จำนวน Failed และ Passed พร้อมรายการ Test ที่มีปัญหา ทำให้เลือกเปิด Test ที่ Fail ได้ทันที</div>
+
+<h4>9.5 ดู Graphs เมื่อมี Failed</h4>
+<img class="shot" src="images/2026-10-07_141647.png" alt="Allure Graphs เมื่อมี Test Failed">
+<div class="note"><b>ความหมายของภาพ:</b> กราฟ Current status เปลี่ยนตามผลจริงของรอบนั้น ทำให้เห็นสัดส่วน Passed / Failed ได้ทันที</div>
+</section>
+
+<section class="step" id="allure-severity"><div class="step-head"><div class="num">10</div><div><h3>จัดกลุ่ม Test Case ด้วย Severity</h3><div class="sub">เพิ่มระดับความสำคัญให้ Test เพื่อใช้กรองและวิเคราะห์ผลใน Allure Report ได้ง่ายขึ้น</div></div></div>
+<p>ใน <b>VS Code Explorer</b> เปิดไฟล์ <code>tests/example.spec.ts</code> แล้วเพิ่ม <code>allure-js-commons</code> และ Severity ให้ Test Case ตามภาพ</p>
+<div class="focus"><b>จุดที่ต้อง Focus:</b><br>① เปิดไฟล์ <code>tests/example.spec.ts</code><br>② เพิ่ม <code>import * as allure from 'allure-js-commons';</code><br>③ Test <code>has title</code> ใช้ <code>critical</code><br>④ Test <code>get started link</code> ใช้ <code>normal</code></div>
+<div class="code-wrap"><pre id="cmd-severity-full">import { test, expect } from '@playwright/test';
+import * as allure from 'allure-js-commons';
+
+test('has title', async ({ page }) =&gt; {
+  await allure.severity('critical');
+
+  await page.goto('https://playwright.dev/bugs');
+  await expect(page).toHaveTitle(/Playwright bugs/);
+});
+
+test('get started link', async ({ page }) =&gt; {
+  await allure.severity('normal');
+
+  await page.goto('https://playwright.dev/');
+  await page.getByRole('link', { name: 'Get started' }).click();
+
+  await expect(
+    page.getByRole('heading', { name: 'Installation' })
+  ).toBeVisible();
+});</pre><button class="copy" onclick="copyCode('cmd-severity-full',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_142321.png" alt="เพิ่ม Severity ใน Test Case">
+<div class="note"><b>Severity คืออะไร:</b> เป็นระดับความสำคัญของ Test Case เช่น <code>critical</code> สำหรับ Test สำคัญ และ <code>normal</code> สำหรับ Test ทั่วไป</div>
 <h4>คำสั่ง Severity ที่ใช้ได้</h4>
-<p>เลือกใช้ <b>เพียง 1 ค่า</b> ต่อ Test Case ตามระดับความสำคัญของ Test นั้น</p>
-<div class="code-wrap"><pre id="cmd-severity-values">await allure.severity('blocker');
+<div class="code-wrap"><pre id="cmd-severity-values2">await allure.severity('blocker');
 await allure.severity('critical');
 await allure.severity('normal');
 await allure.severity('minor');
-await allure.severity('trivial');</pre><button class="copy" onclick="copyCode('cmd-severity-values',this)">คัดลอก</button></div>
-<div class="note"><b>ความหมายแบบง่าย:</b><br><code>blocker</code> = ปัญหารุนแรงมากจนงานหลักไปต่อไม่ได้<br><code>critical</code> = ฟังก์ชันสำคัญมาก ควรให้ความสำคัญสูง<br><code>normal</code> = Test ทั่วไป<br><code>minor</code> = ความสำคัญต่ำกว่า Test ทั่วไป<br><code>trivial</code> = เรื่องเล็กน้อย ผลกระทบน้อย</div>
-<div class="focus"><b>ตัวอย่าง:</b> ถ้า Test Case เป็นขั้นตอนสำคัญของระบบ ให้ใส่ <code>await allure.severity('critical');</code> ไว้ด้านใน Test Case ใกล้บรรทัดแรกหลัง <code>test(...)</code> เพื่อให้หาและแก้ไขได้ง่าย</div>
-<div class="warn"><b>สำหรับ Training นี้:</b> ใช้เพียง <code>critical</code> และ <code>normal</code> ก่อน เพื่อให้เห็นความแตกต่างของการจัดกลุ่มโดยไม่เพิ่มความซับซ้อนมากเกินไป</div>
+await allure.severity('trivial');</pre><button class="copy" onclick="copyCode('cmd-severity-values2',this)">คัดลอก</button></div>
+<p>หลัง Run Test และเปิด Allure Report สามารถใช้ตัวกรอง <b>Severity</b> เพื่อเลือกดูเฉพาะ Test ที่ต้องการได้</p>
+<img class="shot" src="images/2026-10-07_142753.png" alt="กรอง Test ตาม Severity ใน Allure Report">
+<div class="note"><b>ความหมายของภาพ:</b> ในหน้า Results เลือก Filter เช่น <code>Critical</code> และ <code>Normal</code> เพื่อแสดงเฉพาะ Test Case ตามระดับความสำคัญที่กำหนดไว้</div>
 </section>
 
-<section class="step" id="allure-run"><div class="step-head"><div class="num">8</div><div><h3>Run Playwright Test เพื่อสร้างข้อมูล Allure</h3><div class="sub">รัน Test หลังตั้งค่า Reporter เพื่อให้ Allure ได้รับผลการทดสอบ</div></div></div>
-<p>ในคู่มือนี้ใช้ <b>pnpm</b> เป็นหลัก ให้รัน Test ด้วยคำสั่งด้านล่าง:</p>
-<div class="code-wrap"><code id="cmd-run-test">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-run-test',this)">คัดลอก</button></div>
-<div class="note"><b>คำสั่งนี้ทำอะไร:</b> <code>tests/example.spec.ts</code> คือไฟล์ Test ที่ต้องการรัน และ <code>--headed</code> คือให้เปิด Browser ให้เห็นระหว่าง Test ทำงาน</div>
-<img class="shot" src="images/allure-08-run-test.png" alt="Playwright Test ผ่านหลังตั้งค่า Allure">
-<div class="warn"><b>หมายเหตุเกี่ยวกับภาพ:</b> ภาพตัวอย่างเดิมแสดงคำสั่ง <code>npx playwright test ...</code> แต่ Training นี้กำหนดให้ใช้ <b>pnpm</b> ดังนั้นให้ผู้เรียนคัดลอกคำสั่ง <code>pnpm playwright test ...</code> จากกล่องด้านบน</div>
-<div class="ok"><b>ความหมายของภาพ:</b> ข้อความ <code>2 passed</code> หมายถึง Test ผ่าน 2 Test Case หลังจากจบรอบนี้ Playwright จะสร้างข้อมูล Allure ตาม Reporter ที่ตั้งค่าไว้</div>
-</section>
+<section class="step" id="allure-custom"><div class="step-head"><div class="num">11</div><div><h3>Custom กราฟใน Allure Report</h3><div class="sub">ตัวอย่างการปรับหน้า Graphs ให้เหลือเฉพาะ 3 กราฟที่ต้องการ เพื่อให้ Report อ่านง่ายขึ้น</div></div></div>
+<p>Allure Report สามารถ Custom การแสดงผลได้หลายส่วน ใน Training นี้จะยกตัวอย่างง่าย ๆ โดยเลือกให้หน้า <b>Graphs</b> แสดงเพียง 3 กราฟ</p>
+<div class="focus"><b>กราฟที่ใช้:</b><br>1) <b>Current status</b> — Passed / Failed ของรอบปัจจุบัน<br>2) <b>Test results by severities</b> — จำนวน Test แยกตาม Severity<br>3) <b>Durations histogram</b> — การกระจายของระยะเวลา Run Test</div>
 
-<section class="step" id="allure-results"><div class="step-head"><div class="num">9</div><div><h3>ตรวจสอบโฟลเดอร์ allure-results</h3><div class="sub">ยืนยันว่ามีข้อมูลดิบสำหรับใช้สร้าง Allure Report</div></div></div>
-<p>กลับมาที่ <b>VS Code Explorer</b> แล้วดูบริเวณโฟลเดอร์หลักของ Project ควรพบโฟลเดอร์ <code>allure-results</code></p>
-<img class="shot" src="images/allure-09-results-folder.png" alt="โฟลเดอร์ allure-results ใน VS Code">
-<div class="note"><b>ความหมายของภาพ:</b> การมีโฟลเดอร์ <code>allure-results</code> แสดงว่า <code>allure-playwright</code> ทำงานและบันทึกผล Test สำเร็จแล้ว โฟลเดอร์นี้เป็นข้อมูลต้นทางที่ Allure ใช้สร้างหน้า Report</div>
-</section>
+<h4>11.1 สร้างไฟล์ Config</h4>
+<p>ที่ root ของ Project สร้างไฟล์ชื่อ:</p>
+<div class="code-wrap"><code id="cmd-allurerc-name2">allurerc.cjs</code><button class="copy" onclick="copyCode('cmd-allurerc-name2',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_150219.png" alt="สร้างไฟล์ allurerc.cjs">
+<div class="note"><b>ทำไมใช้ <code>.cjs</code>?</b> Config ของ Allure ทำได้หลายรูปแบบ แต่ตัวอย่างนี้ใช้ <code>allurerc.cjs</code> เพราะเหมาะกับผู้เริ่มต้น ใช้ <code>module.exports</code> ได้ตรง ๆ และไม่ต้องเพิ่ม <code>"type": "module"</code> ใน <code>package.json</code> หรือเพิ่ม Package สำหรับ Config</div>
 
-<section class="step" id="allure-serve"><div class="step-head"><div class="num">10</div><div><h3>เปิด Allure Report</h3><div class="sub">นำข้อมูลใน allure-results มาเปิดเป็นหน้า Report บน Browser</div></div></div>
-<p>กลับไปที่ <b>PowerShell Terminal ใน VS Code</b> แล้วรัน:</p>
-<div class="code-wrap"><code id="cmd-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-serve',this)">คัดลอก</button></div>
-<img class="shot medium" src="images/allure-10-serve.png" alt="เปิด Allure Report ด้วย allure serve">
-<div class="ok"><b>ความหมายของภาพ:</b> ข้อความ <code>Allure is running on http://localhost:...</code> หมายถึง Allure Report เปิดเป็น Web Server ในเครื่องแล้ว Browser จะเปิดหน้า Report ให้ใช้งาน</div>
-<div class="note"><b>สำคัญ:</b> เลข Port เช่น <code>60938</code> อาจเปลี่ยนทุกครั้ง ไม่จำเป็นต้องได้เลขเดียวกับในภาพ และให้เปิด Terminal นี้ค้างไว้ระหว่างดู Report</div>
-</section>
+<h4>11.2 ใส่ Config สำหรับ 3 กราฟ</h4>
+<div class="code-wrap"><pre id="cmd-allure-custom-charts2">module.exports = {
+  name: 'Allure Report',
+  output: './allure-report',
 
-<section class="step" id="allure-read"><div class="step-head"><div class="num">11</div><div><h3>อ่านผล Test ใน Allure Report</h3><div class="sub">ดูสถานะ Test และหลักฐานที่ Playwright เก็บไว้จากการรันจริง</div></div></div>
-<img class="shot" src="images/allure-11-report-detail.png" alt="รายละเอียด Test Case ใน Allure Report">
-<div class="note"><b>ความหมายของภาพ:</b> หน้า Test Case แสดงสถานะ <b>Passed</b>, ระยะเวลา, Labels และลำดับ Test body พร้อมหลักฐาน เช่น <b>Playwright Trace</b>, <b>Screenshot</b> และ <b>Video</b> หาก Project ตั้งค่าให้เก็บข้อมูลเหล่านี้ไว้</div>
-<p>ส่วนนี้เหมาะสำหรับตรวจสอบว่า Test ทำอะไรไปบ้าง และใช้ข้อมูล Screenshot / Video / Trace ช่วยวิเคราะห์เมื่อ Test Fail</p>
-<img class="shot" src="images/allure-12b-graphs-current.png" alt="กราฟสรุปผล Passed และ Failed ใน Allure Report">
-<div class="note"><b>ความหมายของภาพ:</b> หน้า <b>Graphs</b> ใช้ดูภาพรวมของผล Test เช่นกราฟ <b>Current status</b> แสดงสัดส่วน Passed / Failed และกราฟ <b>Test results by severities</b> แสดงจำนวน Test แยกตาม Severity</div>
-<div class="warn"><b>ถ้าเห็น No history information available หรือ No results:</b> หมายถึงกราฟนั้นต้องใช้ข้อมูลย้อนหลังหรือ Label เพิ่มเติมที่ยังไม่ได้ตั้งค่า ไม่ได้หมายความว่า Allure ติดตั้งผิด</div>
-<h4>กรอง Test ตาม Severity</h4>
-<p>ที่หน้า <b>Results</b> คลิกตัวกรอง <b>Severity</b> แล้วเลือกค่าที่ต้องการ เช่น <code>Critical</code> และ <code>Normal</code> เพื่อแสดงเฉพาะ Test Case ในกลุ่มนั้น</p>
-<img class="shot" src="images/allure-13-severity-filter.png" alt="กรองผล Test ตาม Severity ใน Allure Report">
-<div class="note"><b>ความหมายของภาพ:</b> Allure Report สามารถใช้ Severity เป็นตัวกรองได้ ทำให้ผู้ใช้เลือกดูเฉพาะ Test ที่มีความสำคัญระดับที่ต้องการ เช่น Critical หรือ Normal โดยไม่ต้องไล่ดู Test ทั้งหมดทีละรายการ</div>
-<div class="ok"><b>ติดตั้งและทดสอบ Allure Report สำเร็จ</b><br>เมื่อมาถึงขั้นนี้ ผู้ใช้สามารถ Run Playwright Test → ได้ <code>allure-results</code> → เปิด Report ด้วย <code>allure serve allure-results</code> และดูรายละเอียด Test บน Browser ได้แล้ว</div>
+  plugins: {
+    awesome: {
+      options: {
+        reportName: 'Allure Report',
+
+        charts: [
+          {
+            type: 'currentStatus',
+            title: 'Current status',
+          },
+          {
+            type: 'testResultSeverities',
+            title: 'Test results by severities',
+          },
+          {
+            type: 'durations',
+            title: 'Durations histogram',
+            groupBy: 'none',
+          },
+        ],
+      },
+    },
+  },
+};</pre><button class="copy" onclick="copyCode('cmd-allure-custom-charts2',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_150234.png" alt="Config Allure ให้เหลือ 3 กราฟ">
+<div class="note"><b>อธิบายแบบง่าย:</b> <code>charts</code> คือรายการกราฟที่ต้องการแสดง และลำดับภายใน <code>charts: [ ... ]</code> คือลำดับของกราฟบน Report ถ้าต้องการให้กราฟใดขึ้นก่อน ให้นำรายการของกราฟนั้นขึ้นไปไว้ด้านบน</div>
+
+<h4>11.3 เปิด Report ใหม่</h4>
+<div class="code-wrap"><code id="cmd-custom-serve2">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-custom-serve2',this)">คัดลอก</button></div>
+<img class="shot medium" src="images/2026-10-07_150258.png" alt="เปิด Allure หลังเพิ่ม Custom Config">
+
+<h4>11.4 ตรวจสอบผลหลัง Custom</h4>
+<img class="shot" src="images/2026-10-07_150314.png" alt="หน้า Graphs เหลือ 3 กราฟ">
+<div class="ok"><b>ผลลัพธ์:</b> หน้า Graphs เหลือเฉพาะ Current status, Test results by severities และ Durations histogram ทำให้หน้า Report กระชับและเหมาะกับ Training มากขึ้น</div>
+<div class="note"><b>แนวคิดสำคัญ:</b> ผู้เรียนไม่จำเป็นต้องจำ Config ทั้งหมด จุดประสงค์ของตัวอย่างนี้คือให้เห็นว่า <b>Allure Report สามารถ Custom ได้</b> ทั้งการเลือกกราฟและการจัดลำดับการแสดงผล</div>
 </section>
 
 <div class="footer">TQM Internal QA Guide • Playwright Training • Allure Report<br>จัดทำโดย Sittikorn Muekdang (QA)</div>

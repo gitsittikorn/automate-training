@@ -12,10 +12,10 @@ test('has title', async ({ page }) => {
   // สร้าง Test Case ชื่อ "has title"
   // page คือหน้า Browser ที่ Playwright เปิดให้เราใช้งาน
 
-  await page.goto('https://playwright.dev/bugs');
+  await page.goto('https://playwright.dev');
   // เปิดเว็บไซต์ https://playwright.dev/
 
-  await expect(page).toHaveTitle(/Playwright bugs/);
+  await expect(page).toHaveTitle(/Playwright/);
   // ตรวจสอบว่า Title ของหน้าเว็บ
   // มีคำว่า "Playwright" อยู่หรือไม่
 });
