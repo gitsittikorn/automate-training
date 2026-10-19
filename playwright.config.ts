@@ -1,4 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
+//allure serve allure-results
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   reporter: [
@@ -7,31 +8,13 @@ export default defineConfig({
   ],
 
   use: {
+    headless: false,
+    browserName: 'chromium',
+
     screenshot: 'on',
     video: 'on',
     trace: 'on',
   },
-
-  projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
-    {
-      name: 'mobile-safari',
-      use: {
-        ...devices['iPhone 13'],
-      },
-    },
-  ],
 });
 
  

@@ -20,6 +20,17 @@ main{max-width:1100px;width:100%;padding:40px 44px 80px;margin:auto}.hero{backgr
 .nav details{margin:4px 0}.nav summary{cursor:pointer;padding:8px 10px;border-radius:8px;font-weight:700;color:#fff}.nav summary:hover{background:#ffffff18}.nav details a{padding-left:22px}.nav-section-label{display:flex;align-items:center;gap:8px;margin:16px 10px 7px 22px;color:#d8efff;font-size:10px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;white-space:nowrap}.nav-section-label:before,.nav-section-label:after{content:'';height:1px;flex:1;background:#ffffff4d}.nav-section-label:before{max-width:18px}.nav-section-label:after{background:linear-gradient(90deg,#ffffff66,#ffffff18)}.nav-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:#19c37d;color:#062e20;font-size:10px;font-weight:800;vertical-align:1px}
 .sidebar-back{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:auto;margin-bottom:10px;padding:9px 11px;border-radius:9px;background:#ffffff12;border:1px solid #ffffff2b;color:#eef8ff;text-decoration:none;font-size:12px;font-weight:700;transition:.18s ease}.sidebar-back:hover{background:#ffffff20;border-color:#ffffff55;color:#fff}.sidebar-back + .author-card{margin-top:0}
 @media(max-width:900px){.layout{display:block}aside{position:relative;height:auto}.nav{display:none}main{padding:22px 14px 50px}.hero{padding:26px}.hero h2{font-size:28px}}
+.level-badge{display:inline-block;font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;vertical-align:middle;margin-left:7px;white-space:nowrap}.level-basic{background:#e4f6eb;color:#17633c}.level-advanced{background:#fff0d4;color:#8a4a00}.level-extra{background:#e8effb;color:#274c83}
+
+/* Allure 8.4: compact learning cards for first-time learners */
+.allure-learning-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0 22px}
+.allure-learning-card{min-width:0;background:#fff;border:1px solid #dfe7f0;border-radius:16px;padding:20px;box-shadow:0 3px 12px #17324b0a}
+.alc-heading{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px 10px;border-bottom:1px solid #e8edf4;padding-bottom:13px;margin-bottom:14px}
+.alc-heading h5{margin:0 0 4px;font-size:19px;line-height:1.3;color:#173653}.alc-subtitle{font-size:13px;color:#617187}
+.alc-heading .level-badge{margin:0;font-size:11px}.alc-section{margin:0 0 14px}.alc-label{font-weight:750;color:#163b60;margin-bottom:6px;font-size:14px}.alc-section p,.alc-workshop p{margin:0;line-height:1.75;font-size:14px}
+.alc-examples{background:#f4f8fc;border-radius:10px;padding:4px 12px}.alc-example{display:flex;flex-direction:column;gap:2px;padding:9px 0;font-size:13px;line-height:1.6}.alc-example+.alc-example{border-top:1px solid #dfe7ef}.alc-example b{color:#203e59}.alc-example span{color:#52677a}
+.alc-metric{border-left:3px solid #2785c4;padding-left:11px}.alc-workshop{background:#edf7f2;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.65}.alc-workshop b{color:#17633c}.alc-workshop p{margin-top:3px}
+@media(max-width:1120px){.allure-learning-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -196,6 +207,34 @@ export default defineConfig({
 <div class="note"><b>ความหมายของภาพ:</b> ข้อความ <code>Allure is running on http://localhost:...</code> หมายถึง Allure เปิด Report บนเครื่องสำเร็จแล้ว เลข Port อาจเปลี่ยนในแต่ละครั้ง</div>
 
 <h4>8.4 ดูรายละเอียด Test Case</h4>
+<img class="shot" src="images/2026-10-07_115317.png" alt="ภาพรวม Allure Report แสดง Results, Quality Gates, Global Attachments และ Global Errors">
+<div class="note"><b>ภาพแรก — หน้า Allure Report:</b> หลังเปิดรายงานในเว็บเบราว์เซอร์ ให้ดูแถบเมนูด้านบน ภาพตัวอย่างมี Test ทั้งหมด 2 รายการ ผ่าน 2 รายการ (100%) โดย Quality Gates, Global Attachments และ Global Errors แสดง 0 ส่วน Categories อาจไม่ปรากฏในบางรอบเมื่อไม่มีหมวดหมู่ข้อผิดพลาดให้แสดง</div>
+
+<div class="focus"><b>เริ่มอ่านรายงานจากตรงไหน?</b> ให้ดู <b>Results</b> เพื่อรู้ว่า Test ไหนผ่านหรือไม่ผ่านก่อน แล้วค่อยเรียนรู้เมนูอีก 4 หัวข้อด้านล่าง โดยแต่ละหัวข้อมีระดับความยากกำกับไว้</div>
+<div class="allure-learning-grid">
+<article class="allure-learning-card"><div class="alc-heading"><div><h5>Categories</h5><div class="alc-subtitle">หมวดหมู่ข้อผิดพลาด</div></div><span class="level-badge level-basic">พื้นฐาน: ดูผลได้</span></div>
+<div class="alc-section"><div class="alc-label">ใช้ทำอะไร?</div><p>ช่วยแยกประเภทข้อผิดพลาด เพื่อให้รู้ว่า Test ไม่ผ่านเพราะอะไร</p></div>
+<div class="alc-section"><div class="alc-label">ตัวอย่างที่พบได้</div><div class="alc-examples"><div class="alc-example"><b>Timeout Error</b><span>รอการทำงานนานเกินเวลาที่กำหนด</span></div><div class="alc-example"><b>Element Not Found</b><span>ไม่พบปุ่มหรือข้อมูลที่ต้องการบนหน้าเว็บ</span></div></div></div>
+<div class="alc-section alc-metric"><div class="alc-label">ตัวเลขบนรายงานหมายถึงอะไร?</div><p>Categories 1 = มีหมวดหมู่ข้อผิดพลาด 1 หมวด ไม่ได้แปลว่ามี Test Failed เพียง 1 รายการ</p></div>
+<div class="alc-workshop"><b>สำหรับ Workshop นี้</b><p>ฝึกอ่านหมวดหมู่ที่มีอยู่ก่อน การสร้างกฎจัดหมวดหมู่เองเป็นขั้นสูง และยังไม่ต้องทำใน Workshop นี้</p></div></article>
+<article class="allure-learning-card"><div class="alc-heading"><div><h5>Quality Gates</h5><div class="alc-subtitle">เกณฑ์ตรวจสอบคุณภาพ</div></div><span class="level-badge level-advanced">ขั้นสูง (Advanced)</span></div>
+<div class="alc-section"><div class="alc-label">ใช้ทำอะไร?</div><p>ใช้เปรียบเทียบผลการทดสอบกับเกณฑ์ที่ทีมกำหนด เช่น ต้องผ่านอย่างน้อย 95%</p></div>
+<div class="alc-section"><div class="alc-label">ตัวอย่างที่พบได้</div><div class="alc-examples"><div class="alc-example"><b>ผ่าน 10 จาก 11 Test</b><span>อัตราผ่านเท่ากับ 90.9%</span></div><div class="alc-example"><b>เกณฑ์ตัวอย่าง 95%</b><span>ผล 90.9% จะต่ำกว่าเกณฑ์ที่สมมติไว้</span></div></div></div>
+<div class="alc-section alc-metric"><div class="alc-label">ตัวเลขบนรายงานหมายถึงอะไร?</div><p>Quality Gates 0 = ไม่มีรายการเกณฑ์ที่แสดงในรายงาน ไม่ใช่ผลว่าไม่ผ่านเกณฑ์</p></div>
+<div class="alc-workshop"><b>สำหรับ Workshop นี้</b><p>สำหรับ Workshop นี้รู้จักความหมายไว้ก่อน ยังไม่ต้องตั้งค่าหรือสร้าง Quality Gates</p></div></article>
+<article class="allure-learning-card"><div class="alc-heading"><div><h5>Global Attachments</h5><div class="alc-subtitle">ไฟล์แนบส่วนกลาง</div></div><span class="level-badge level-advanced">ขั้นสูง (Advanced)</span></div>
+<div class="alc-section"><div class="alc-label">ใช้ทำอะไร?</div><p>ใช้ดูไฟล์ที่เกี่ยวข้องกับการทดสอบทั้งรอบ ไม่ได้แนบไว้กับ Test Case ใดโดยเฉพาะ</p></div>
+<div class="alc-section"><div class="alc-label">ตัวอย่างที่พบได้</div><div class="alc-examples"><div class="alc-example"><b>Environment Information</b><span>ข้อมูลสภาพแวดล้อมที่ใช้ทดสอบ</span></div><div class="alc-example"><b>Execution Log</b><span>ไฟล์บันทึกการทำงานโดยรวม</span></div></div></div>
+<div class="alc-section alc-metric"><div class="alc-label">ตัวเลขบนรายงานหมายถึงอะไร?</div><p>Global Attachments 0 = ไม่มีไฟล์แนบส่วนกลาง ส่วน Screenshot, Video และ Trace ของแต่ละ Test ให้เปิดจากรายละเอียด Test Case</p></div>
+<div class="alc-workshop"><b>สำหรับ Workshop นี้</b><p>ยังไม่ต้องสร้างไฟล์แนบส่วนกลาง ให้ฝึกเปิด Screenshot, Video และ Trace ใน Test Case ก่อน</p></div></article>
+<article class="allure-learning-card"><div class="alc-heading"><div><h5>Global Errors</h5><div class="alc-subtitle">ข้อผิดพลาดระดับการรันทดสอบ</div></div><span class="level-badge level-extra">เรียนรู้เพิ่มเติม</span></div>
+<div class="alc-section"><div class="alc-label">ใช้ทำอะไร?</div><p>ใช้ดูข้อผิดพลาดที่ถูกรายงานในระดับการทำงานโดยรวม ไม่ใช่การตรวจสอบของ Test Case โดยตรง</p></div>
+<div class="alc-section"><div class="alc-label">ตัวอย่างที่พบได้</div><div class="alc-examples"><div class="alc-example"><b>Failed Test</b><span>Test Case ทดสอบไม่ผ่าน เช่น ผลจริงไม่ตรงกับที่คาดหวัง</span></div><div class="alc-example"><b>Global Error</b><span>ข้อผิดพลาดระดับการรันทดสอบ เช่น ปัญหาการเตรียมระบบทดสอบ</span></div></div></div>
+<div class="alc-section alc-metric"><div class="alc-label">ตัวเลขบนรายงานหมายถึงอะไร?</div><p>Failed 1 และ Global Errors 0 สามารถเกิดพร้อมกันได้ เพราะเป็นข้อผิดพลาดคนละประเภท</p></div>
+<div class="alc-workshop"><b>สำหรับ Workshop นี้</b><p>รู้จักความหมายไว้ก่อน หากมีรายการ Global Errors ให้แจ้งผู้สอนเพื่อช่วยตรวจสอบ ยังไม่ต้องแก้เอง</p></div></article>
+</div><div class="focus"><b>สรุป:</b> มือใหม่ให้โฟกัส <b>Results → เปิด Test Case → ดู Screenshot / Video / Trace</b> ก่อน ส่วนเมนูที่ระบุว่า <b>ขั้นสูง (Advanced)</b> ยังไม่ต้องตั้งค่าใน Workshop นี้</div>
+
+<p><b>ต่อไป — เปิดดูรายละเอียด Test Case:</b> ในหน้า Results ให้คลิกชื่อ Test เช่น <code>has title</code> เพื่อดูข้อมูลของ Test Case นั้น</p>
 <img class="shot" src="images/2026-10-07_115318.png" alt="รายละเอียด Test Case ใน Allure Report">
 <div class="note"><b>ความหมายของภาพ:</b> ในหน้า Test Case สามารถดูสถานะ Passed, Test body, Screenshot, Video และ Trace ที่ Playwright เก็บไว้ ช่วยตรวจสอบหลักฐานของการ Run ได้จากหน้าเดียว</div>
 
