@@ -1,4 +1,4 @@
-// pnpm playwright test tests/example.spec.ts --headed
+// npx playwright test tests/example.spec.ts --headed
 import { test, expect } from '@playwright/test';
 // import เครื่องมือ test และ expect จาก Playwright
 // test ใช้สำหรับสร้าง Test Case
@@ -7,22 +7,22 @@ import * as allure from 'allure-js-commons';
 
 
 test('has title', async ({ page }) => {
-  await allure.severity('critical');
+ await allure.severity('critical');
 
   // สร้าง Test Case ชื่อ "has title"
   // page คือหน้า Browser ที่ Playwright เปิดให้เราใช้งาน
 
-  await page.goto('https://playwright.dev/');
+  await page.goto('https://playwright.dev/bugs');
   // เปิดเว็บไซต์ https://playwright.dev/
 
-  await expect(page).toHaveTitle(/Playwright/);
+  await expect(page).toHaveTitle(/Playwright bugs/);
   // ตรวจสอบว่า Title ของหน้าเว็บ
   // มีคำว่า "Playwright" อยู่หรือไม่
 });
 
 
 test('get started link', async ({ page }) => {
-  await allure.severity('normal');
+await allure.severity('normal');
 
   // สร้าง Test Case ชื่อ "get started link"
 

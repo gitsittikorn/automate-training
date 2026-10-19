@@ -159,6 +159,8 @@ test('get started link', async ({ page }) => {
   // ตรวจสอบว่าหลังจากคลิกแล้ว
   // มีหัวข้อชื่อ "Installation" แสดงอยู่บนหน้าเว็บ
 });</pre><button class="copy" onclick="copyCode('code-workshop-baseline',this)">คัดลอก</button></div>
+<p><b>รัน Test หลังบันทึกไฟล์:</b> เปิด <b>VS Code → Terminal → PowerShell</b> ในโฟลเดอร์ Project แล้วกดปุ่ม <b>คัดลอกคำสั่ง</b> ด้านล่าง นำไปวางใน Terminal และกด <code>Enter</code> เพื่อทดสอบไฟล์ <code>tests/example.spec.ts</code> ที่เพิ่งแก้ไข</p>
+<div class="code-wrap"><code id="cmd-copy-baseline-run">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-copy-baseline-run',this)">คัดลอก</button></div>
 <div class="note"><b>ทำไปเพื่ออะไร:</b> เมื่อทุกคนใช้ไฟล์เริ่มต้นชุดเดียวกัน ผลการ Run, จำนวน Test Case และภาพใน Allure Report จะใกล้เคียงกับคู่มือ ทำให้ผู้สอนช่วยแก้ปัญหาได้ง่ายขึ้น</div>
 </section>
 
@@ -290,6 +292,8 @@ export default defineConfig({
 <img class="shot" src="images/2026-10-07_134158.png" alt="Run Test หลาย Browser Device">
 <div class="note"><b>ภาพที่ 2 — Run Test:</b> ตัวอย่างมี 2 Test Case และ 3 Project จึงเกิดผลการ Run รวม 6 รายการ เมื่อขึ้น <code>6 passed</code> หมายถึงทุก Test ผ่านครบทุก Browser / Device ที่กำหนดไว้</div>
 
+<p><b>เปิด Allure Report:</b> ไปที่ <b>VS Code → Terminal → PowerShell</b> (อยู่ในโฟลเดอร์ Project) แล้วคัดลอกคำสั่งนี้เพื่อเปิดรายงานผลการทดสอบรอบล่าสุด:</p>
+<div class="code-wrap"><code id="cmd-multi-browser-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-multi-browser-serve',this)">คัดลอก</button></div>
 <img class="shot" src="images/2026-10-07_140501.png" alt="Allure Report หลัง Run หลาย Browser Device">
 <div class="note"><b>ภาพที่ 3 — ดูผลใน Allure Report:</b> Allure รวมผลจากหลาย Browser / Device ไว้ใน Report เดียว ทำให้เห็นจำนวน Test ทั้งหมดและสถานะของแต่ละรายการได้ในหน้าเดียว</div>
 
@@ -303,7 +307,7 @@ export default defineConfig({
 
 <h4>9.1 แก้ Test ให้เจอ Bug แบบตัวอย่าง</h4>
 <p>เปิด <code>tests/example.spec.ts</code> ใน <b>VS Code</b> แล้ว Copy โค้ดทั้งหมดด้านล่างไปแทนไฟล์เดิม ตัวอย่างนี้ตั้งใจทำให้ Test Case <code>has title</code> Fail เพื่อใช้สาธิตการอ่าน Error และ Allure Report</p>
-<div class="code-wrap"><pre id="code-failed-example-full">// npx playwright test tests/example.spec.ts --headed
+<div class="code-wrap"><pre id="code-failed-example-full">// pnpm playwright test tests/example.spec.ts --headed
 import { test, expect } from '@playwright/test';
 // import เครื่องมือ test และ expect จาก Playwright
 // test ใช้สำหรับสร้าง Test Case
@@ -344,6 +348,8 @@ await allure.severity('normal');
   // ตรวจสอบว่าหลังจากคลิกแล้ว
   // มีหัวข้อชื่อ "Installation" แสดงอยู่บนหน้าเว็บ
 });</pre><button class="copy" onclick="copyCode('code-failed-example-full',this)">คัดลอก</button></div>
+<p><b>รัน Test หลังบันทึกไฟล์:</b> เปิด <b>VS Code → Terminal → PowerShell</b> ในโฟลเดอร์ Project แล้วกดปุ่ม <b>คัดลอกคำสั่ง</b> ด้านล่าง นำไปวางใน Terminal และกด <code>Enter</code> เพื่อทดสอบไฟล์ <code>tests/example.spec.ts</code> ที่เพิ่งแก้ไข</p>
+<div class="code-wrap"><code id="cmd-copy-failed-run">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-copy-failed-run',this)">คัดลอก</button></div>
 <div class="focus"><b>วิธีทำ:</b> เปิด <code>tests/example.spec.ts</code> → กด <code>Ctrl + A</code> → Paste โค้ดด้านบน → กด <code>Ctrl + S</code></div>
 <img class="shot" src="images/2026-10-07_141352.png" alt="ตัวอย่างแก้ Test ให้ Fail">
 <div class="note"><b>ความหมายของภาพ:</b> ตัวอย่างเปลี่ยน URL ไปที่ <code>https://playwright.dev/bugs</code> และตรวจสอบ Title ที่ไม่ตรงกับหน้าจริง จึงตั้งใจทำให้ Test Fail เพื่อใช้ดู Report กรณีพบปัญหา</div>
@@ -354,6 +360,7 @@ await allure.severity('normal');
 <div class="note"><b>ความหมายของภาพ:</b> Terminal แสดง Expected, Received และตำแหน่งของ Test ที่ Fail ช่วยให้รู้ว่า Assertion ใดไม่ตรงกับผลจริง</div>
 
 <h4>9.3 เปิด Allure Report ของรอบที่มี Failed</h4>
+<p>ไปที่ <b>VS Code → Terminal → PowerShell</b> แล้วรันคำสั่งต่อไปนี้ เพื่อเปิดรายงานจากผล Test ล่าสุด:</p>
 <div class="code-wrap"><code id="cmd-fail-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-fail-serve',this)">คัดลอก</button></div>
 <img class="shot medium" src="images/2026-10-07_141431.png" alt="เปิด Allure Report หลัง Test Fail">
 
@@ -362,14 +369,15 @@ await allure.severity('normal');
 <div class="note"><b>ความหมายของภาพ:</b> หน้า Results แสดงจำนวน Test ทั้งหมด จำนวน Failed และ Passed พร้อมรายการ Test ที่มีปัญหา ทำให้เลือกเปิด Test ที่ Fail ได้ทันที</div>
 
 <h4>9.5 ดู Graphs เมื่อมี Failed</h4>
-<img class="shot" src="images/2026-10-07_141647.png" alt="Allure Graphs เมื่อมี Test Failed">
+<img class="shot" src="images/2026-10-07_141520.png" alt="Allure Graphs เมื่อมี Test Failed">
 <div class="note"><b>ความหมายของภาพ:</b> กราฟ Current status เปลี่ยนตามผลจริงของรอบนั้น ทำให้เห็นสัดส่วน Passed / Failed ได้ทันที</div>
 </section>
 
 <section class="step" id="allure-severity"><div class="step-head"><div class="num">10</div><div><h3>จัดกลุ่ม Test Case ด้วย Severity</h3><div class="sub">เพิ่มระดับความสำคัญให้ Test เพื่อใช้กรองและวิเคราะห์ผลใน Allure Report ได้ง่ายขึ้น</div></div></div>
 <p>ใน <b>VS Code Explorer</b> เปิดไฟล์ <code>tests/example.spec.ts</code> แล้วเพิ่ม <code>allure-js-commons</code> และ Severity ให้ Test Case ตามภาพ</p>
 <div class="focus"><b>จุดที่ต้อง Focus:</b><br>① เปิดไฟล์ <code>tests/example.spec.ts</code><br>② เพิ่ม <code>import * as allure from 'allure-js-commons';</code><br>③ Test <code>has title</code> ใช้ <code>critical</code><br>④ Test <code>get started link</code> ใช้ <code>normal</code></div>
-<div class="code-wrap"><pre id="cmd-severity-full">import { test, expect } from '@playwright/test';
+<div class="code-wrap"><pre id="cmd-severity-full">// pnpm playwright test tests/example.spec.ts --headed
+import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
 
 test('has title', async ({ page }) =&gt; {
@@ -389,6 +397,8 @@ test('get started link', async ({ page }) =&gt; {
     page.getByRole('heading', { name: 'Installation' })
   ).toBeVisible();
 });</pre><button class="copy" onclick="copyCode('cmd-severity-full',this)">คัดลอก</button></div>
+<p><b>รัน Test หลังบันทึกไฟล์:</b> เปิด <b>VS Code → Terminal → PowerShell</b> ในโฟลเดอร์ Project แล้วกดปุ่ม <b>คัดลอกคำสั่ง</b> ด้านล่าง นำไปวางใน Terminal และกด <code>Enter</code> เพื่อทดสอบไฟล์ <code>tests/example.spec.ts</code> ที่เพิ่งแก้ไข</p>
+<div class="code-wrap"><code id="cmd-copy-severity-run">pnpm playwright test tests/example.spec.ts --headed</code><button class="copy" onclick="copyCode('cmd-copy-severity-run',this)">คัดลอก</button></div>
 <img class="shot" src="images/2026-10-07_142321.png" alt="เพิ่ม Severity ใน Test Case">
 <div class="note"><b>Severity คืออะไร:</b> เป็นระดับความสำคัญของ Test Case เช่น <code>critical</code> สำหรับ Test สำคัญ และ <code>normal</code> สำหรับ Test ทั่วไป</div>
 <h4>คำสั่ง Severity ที่ใช้ได้</h4>
@@ -397,6 +407,10 @@ await allure.severity('critical');
 await allure.severity('normal');
 await allure.severity('minor');
 await allure.severity('trivial');</pre><button class="copy" onclick="copyCode('cmd-severity-values2',this)">คัดลอก</button></div>
+<img class="shot" src="images/2026-10-07_142322.png" alt="ตัวอย่าง Terminal แสดงผลการ Run Test 3 Failed และ 3 Passed">
+<div class="note"><b>ความหมายของภาพ — ผล Run Test:</b> มีผลการทดสอบรวม <b>6 รายการ</b> จาก 2 Test Case ที่รันบน 3 Browser / Device โดย <b>3 Passed</b> (ผ่าน) คือ <code>get started link</code> ทั้ง 3 Browser / Device และ <b>3 Failed</b> (ไม่ผ่าน) คือ <code>has title</code> ทั้ง 3 Browser / Device จึงมีอัตราผ่าน <b>50%</b> ผล Failed ในตัวอย่างนี้เกิดจากการตั้งใจให้เงื่อนไขตรวจสอบไม่ตรง เพื่อฝึกอ่านรายงาน ไม่ได้แปลว่า Playwright หรือ Allure ติดตั้งผิด</div>
+<p><b>เปิด Allure Report:</b> ไปที่ <b>VS Code → Terminal → PowerShell</b> (อยู่ในโฟลเดอร์ Project) แล้วคัดลอกคำสั่งนี้เพื่อเปิดรายงานผลการทดสอบรอบล่าสุด:</p>
+<div class="code-wrap"><code id="cmd-severity-serve">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-severity-serve',this)">คัดลอก</button></div>
 <p>หลัง Run Test และเปิด Allure Report สามารถใช้ตัวกรอง <b>Severity</b> เพื่อเลือกดูเฉพาะ Test ที่ต้องการได้</p>
 <img class="shot" src="images/2026-10-07_142753.png" alt="กรอง Test ตาม Severity ใน Allure Report">
 <div class="note"><b>ความหมายของภาพ:</b> ในหน้า Results เลือก Filter เช่น <code>Critical</code> และ <code>Normal</code> เพื่อแสดงเฉพาะ Test Case ตามระดับความสำคัญที่กำหนดไว้</div>
@@ -445,6 +459,7 @@ await allure.severity('trivial');</pre><button class="copy" onclick="copyCode('c
 <div class="note"><b>อธิบายแบบง่าย:</b> <code>charts</code> คือรายการกราฟที่ต้องการแสดง และลำดับภายใน <code>charts: [ ... ]</code> คือลำดับของกราฟบน Report ถ้าต้องการให้กราฟใดขึ้นก่อน ให้นำรายการของกราฟนั้นขึ้นไปไว้ด้านบน</div>
 
 <h4>11.3 เปิด Report ใหม่</h4>
+<p>ไปที่ <b>VS Code → Terminal → PowerShell</b> แล้วรันคำสั่งต่อไปนี้ เพื่อเปิดรายงานหลังแก้ Config:</p>
 <div class="code-wrap"><code id="cmd-custom-serve2">allure serve allure-results</code><button class="copy" onclick="copyCode('cmd-custom-serve2',this)">คัดลอก</button></div>
 <img class="shot medium" src="images/2026-10-07_150258.png" alt="เปิด Allure หลังเพิ่ม Custom Config">
 
